@@ -1,0 +1,4 @@
+FADD:/NewFolder
+FMV:/NewFolder:/exe
+IADD:00000000:/exe/HOT.exe
+IDSET:/exe/HOT.exe:c0a81c4caed1474269146825900

@@ -1,0 +1,683 @@
+    BasicCar 1002 
+        { 
+            Name 309 
+            CatchupSizeVariation 1.5 
+            CatchupSpeedBack 0.7 
+            CatchupSpeedFront 0.4 
+            PercentChanceToUpgradeWeapon 50 
+            TOP-SPEED 6 
+            ACCEL 8 
+            GRIP 7 
+            CHARGE 4 
+            VehicleScript 16Angels 
+            SoundArchive Engine01 
+        } 
+        
+    BasicCar 1001 
+        { 
+            Name 324 
+            CatchupSizeVariation 1.5 
+            CatchupSpeedBack 0.7 
+            CatchupSpeedFront 0.4 
+            PercentChanceToUpgradeWeapon 50 
+            TOP-SPEED 4 
+            ACCEL 4 
+            GRIP 5 
+            CHARGE 5 
+            VehicleScript 24Seven 
+            SoundArchive Engine01 
+        } 
+    
+    BasicCar 1011 
+        { 
+            Name 310 
+            CatchupSizeVariation 1.5 
+            CatchupSpeedBack 0.7 
+            CatchupSpeedFront 0.4 
+            PercentChanceToUpgradeWeapon 50 
+            TOP-SPEED 8 
+            ACCEL 6 
+            GRIP 6 
+            CHARGE 8 
+            VehicleScript Boneshaker 
+            SoundArchive Engine01 
+        } 
+        
+    BasicCar 1003 
+        { 
+            Name 311 
+            CatchupSizeVariation 1.5 
+            CatchupSpeedBack 0.7 
+            CatchupSpeedFront 0.4 
+            PercentChanceToUpgradeWeapon 50 
+            TOP-SPEED 4 
+            ACCEL 3 
+            GRIP 4 
+            CHARGE 4 
+            VehicleScript Brutalistic 
+            SoundArchive Engine01 
+        } 
+        
+    BasicCar 1004 
+        { 
+            Name 312 
+            CatchupSizeVariation 1.5 
+            CatchupSpeedBack 0.7 
+            CatchupSpeedFront 0.4 
+            PercentChanceToUpgradeWeapon 50 
+            TOP-SPEED 2 
+            ACCEL 3 
+            GRIP 5 
+            CHARGE 5 
+            VehicleScript Bullygoat 
+            SoundArchive Engine01 
+        } 
+    
+    BasicCar 1012 
+        { 
+            Name 352 
+            CatchupSizeVariation 1.5 
+            CatchupSpeedBack 0.7 
+            CatchupSpeedFront 0.4 
+            PercentChanceToUpgradeWeapon 50 
+            TOP-SPEED 5 
+            ACCEL 3 
+            GRIP 3 
+            CHARGE 4 
+            VehicleScript Chicane 
+            SoundArchive Engine01 
+        } 
+        
+    BasicCar 1005 
+        { 
+            Name 313 
+            CatchupSizeVariation 1.5 
+            CatchupSpeedBack 0.7 
+            CatchupSpeedFront 0.4 
+            PercentChanceToUpgradeWeapon 50 
+            TOP-SPEED 4 
+            ACCEL 2 
+            GRIP 4 
+            CHARGE 5 
+            VehicleScript CoolOne 
+            SoundArchive Engine01 
+        } 
+    
+    BasicCar 1013
+        { 
+            Name 353 
+            CatchupSizeVariation 1.5 
+            CatchupSpeedBack 0.7 
+            CatchupSpeedFront 0.4 
+            PercentChanceToUpgradeWeapon 50 
+            TOP-SPEED 5 
+            ACCEL 5 
+            GRIP 2 
+            CHARGE 3
+            VehicleScript Covelite 
+            SoundArchive Engine01 
+        } 
+    
+    BasicCar 1014 
+        { 
+            Name 354 
+            CatchupSizeVariation 1.5 
+            CatchupSpeedBack 0.7 
+            CatchupSpeedFront 0.4 
+            PercentChanceToUpgradeWeapon 50 
+            TOP-SPEED 8 
+            ACCEL 8 
+            GRIP 8 
+            CHARGE 8 
+            VehicleScript DaCar 
+            SoundArchive Engine01 
+        } 
+        
+    BasicCar 1006 
+        { 
+            Name 315 
+            CatchupSizeVariation 1.5 
+            CatchupSpeedBack 0.7 
+            CatchupSpeedFront 0.4 
+            PercentChanceToUpgradeWeapon 50 
+            TOP-SPEED 6 
+            ACCEL 4 
+            GRIP 4 
+            CHARGE 6 
+            VehicleScript Demon 
+            SoundArchive Engine01 
+        } 
+        
+    BasicCar 1007 
+        { 
+            Name 316 
+            CatchupSizeVariation 1.5 
+            CatchupSpeedBack 0.7 
+            CatchupSpeedFront 0.4 
+            PercentChanceToUpgradeWeapon 50 
+            TOP-SPEED 9 
+            ACCEL 8 
+            GRIP 7 
+            CHARGE 10 
+            VehicleScript DieselBoy 
+            SoundArchive Engine01 
+        } 
+    
+    BasicCar 1008 
+        { 
+            Name 317 
+            CatchupSizeVariation 1.5 
+            CatchupSpeedBack 0.7 
+            CatchupSpeedFront 0.4
+            PercentChanceToUpgradeWeapon 50 
+            TOP-SPEED 2 
+            ACCEL 5 
+            GRIP 3 
+            CHARGE 5 
+            VehicleScript Formul8r 
+            SoundArchive Engine01 
+        } 
+        
+    BasicCar 1009 
+        { 
+            Name 318 
+            CatchupSizeVariation 1.5 
+            CatchupSpeedBack 0.7 
+            CatchupSpeedFront 0.4 
+            PercentChanceToUpgradeWeapon 50 
+            TOP-SPEED 4 
+            ACCEL 4 
+            GRIP 6 
+            CHARGE 3 
+            VehicleScript Hellfire 
+            SoundArchive Engine01
+        } 
+        
+    BasicCar 1015 
+        { 
+            Name 355 
+            CatchupSizeVariation 1.5 
+            CatchupSpeedBack 0.7 
+            CatchupSpeedFront 0.4 
+            PercentChanceToUpgradeWeapon 50 
+            TOP-SPEED 9 
+            ACCEL 8 
+            GRIP 9 
+            CHARGE 7 
+            VehicleScript 
+            HollowBack 
+            SoundArchive Engine01 
+        } 
+        
+    BasicCar 1016 
+        { 
+            Name 356 
+            CatchupSizeVariation 1.5 
+            CatchupSpeedBack 0.7 
+            CatchupSpeedFront 0.4 
+            PercentChanceToUpgradeWeapon 50 
+            TOP-SPEED 1 
+            ACCEL 5 
+            GRIP 4 
+            CHARGE 5 
+            VehicleScript Jackhammer 
+            SoundArchive Engine01 
+        } 
+        
+    BasicCar 1017 
+        { 
+            Name 357 
+            CatchupSizeVariation 1.5 
+            CatchupSpeedBack 0.7 
+            CatchupSpeedFront 0.4 
+            PercentChanceToUpgradeWeapon 50 
+            TOP-SPEED 3 
+            ACCEL 3 
+            GRIP 5 
+            CHARGE 4 
+            VehicleScript MidDrift 
+            SoundArchive Engine01 
+        } 
+        
+    BasicCar 1018 
+        { 
+            Name 358 
+            CatchupSizeVariation 1.5 
+            CatchupSpeedBack 0.7 
+            CatchupSpeedFront 0.4 
+            PercentChanceToUpgradeWeapon 50 
+            TOP-SPEED 3 
+            ACCEL 5 
+            GRIP 3 
+            CHARGE 4 
+            VehicleScript MSTSuzuka 
+            SoundArchive Engine01 
+        } 
+        
+    BasicCar 1019 
+        { 
+            Name 359 
+            CatchupSizeVariation 1.5 
+            CatchupSpeedBack 0.7 
+            CatchupSpeedFront 0.4 
+            PercentChanceToUpgradeWeapon 50 
+            TOP-SPEED 6 
+            ACCEL 7 
+            GRIP 7 
+            CHARGE 7 
+            VehicleScript MuscleTone 
+            SoundArchive Engine01 
+        } 
+        
+    BasicCar 1010 
+        { 
+            Name 319 
+            CatchupSizeVariation 1.5 
+            CatchupSpeedBack 0.7 
+            CatchupSpeedFront 0.4 
+            PercentChanceToUpgradeWeapon 50 
+            TOP-SPEED 7 
+            ACCEL 8 
+            GRIP 8 
+            CHARGE 7 
+            VehicleScript NitroDoorslammer 
+            SoundArchive Engine01 
+        } 
+        
+    BasicCar 1020 
+        { 
+            Name 360 
+            CatchupSizeVariation 1.5 
+            CatchupSpeedBack 0.7 
+            CatchupSpeedFront 0.4 
+            PercentChanceToUpgradeWeapon 50 
+            TOP-SPEED 2 
+            ACCEL 5 
+            GRIP 4 
+            CHARGE 4 
+            VehicleScript OffTrack 
+            SoundArchive Engine01 
+        } 
+        
+    BasicCar 1021 
+        { 
+            Name 361 
+            CatchupSizeVariation 1.5 
+            CatchupSpeedBack 0.7 
+            CatchupSpeedFront 0.4 
+            PercentChanceToUpgradeWeapon 50 
+            TOP-SPEED 6 
+            ACCEL 6 
+            GRIP 5 
+            CHARGE 5 
+            VehicleScript PhantomRacer 
+            SoundArchive Engine01 
+        } 
+        
+    BasicCar 1022 
+        { 
+            Name 362 
+            CatchupSizeVariation 1.5 
+            CatchupSpeedBack 0.7 
+            CatchupSpeedFront 0.4 
+            PercentChanceToUpgradeWeapon 50 
+            TOP-SPEED 9 
+            ACCEL 9 
+            GRIP 10 
+            CHARGE 10 
+            VehicleScript PowerBomb 
+            SoundArchive Engine01 
+        } 
+        
+    BasicCar 1023 
+        { 
+            Name 363 
+            CatchupSizeVariation 1.5 
+            CatchupSpeedBack 0.7 
+            CatchupSpeedFront 0.4 
+            PercentChanceToUpgradeWeapon 50 
+            TOP-SPEED 4 
+            ACCEL 3 
+            GRIP 3 
+            CHARGE 5 
+            VehicleScript Rockster 
+            SoundArchive Engine01 
+        } 
+    
+    BasicCar 1024 
+        { 
+            Name 364 
+            CatchupSizeVariation 1.5
+            CatchupSpeedBack 0.7 
+            CatchupSpeedFront 0.4 
+            PercentChanceToUpgradeWeapon 50 
+            TOP-SPEED 10 
+            ACCEL 10 
+            GRIP 10 
+            CHARGE 10 
+            VehicleScript ShadowMk2 
+            SoundArchive Engine01 
+        } 
+        
+    BasicCar 1025 
+        { 
+            Name 365 
+            CatchupSizeVariation 1.5 
+            CatchupSpeedBack 0.7 
+            CatchupSpeedFront 0.4 
+            PercentChanceToUpgradeWeapon 50 
+            TOP-SPEED 8 
+            ACCEL 9 
+            GRIP 6 
+            CHARGE 6 
+            VehicleScript SK2BattleSpec 
+            SoundArchive Engine01 
+        } 
+        
+    BasicCar 1026 
+        { 
+            Name 366 
+            CatchupSizeVariation 1.5 
+            CatchupSpeedBack 0.7 
+            CatchupSpeedFront 0.4 
+            PercentChanceToUpgradeWeapon 50 
+            TOP-SPEED 5 
+            ACCEL 5 
+            GRIP 1 
+            CHARGE 4 
+            VehicleScript SoooFast 
+            SoundArchive Engine01 
+        } 
+    
+    BasicCar 1027 
+        { 
+            Name 367 
+            CatchupSizeVariation 1.5 
+            CatchupSpeedBack 0.7 
+            CatchupSpeedFront 0.4 
+            PercentChanceToUpgradeWeapon 50 
+            TOP-SPEED 3 
+            ACCEL 5 
+            GRIP 5 
+            CHARGE 2 
+            VehicleScript Spectyte 
+            SoundArchive Engine01 
+        } 
+        
+    BasicCar 1028 
+        { 
+            Name 368 
+            CatchupSizeVariation 1.5
+            CatchupSpeedBack 0.7 
+            CatchupSpeedFront 0.4 
+            PercentChanceToUpgradeWeapon 50 
+            TOP-SPEED 10 
+            ACCEL 10 
+            GRIP 10 
+            CHARGE 10 
+            VehicleScript SpeedBump 
+            SoundArchive Engine01 
+        } 
+        
+    BasicCar 1029 
+        { 
+            Name 369 
+            CatchupSizeVariation 1.5 
+            CatchupSpeedBack 0.7 
+            CatchupSpeedFront 0.4 
+            PercentChanceToUpgradeWeapon 50 
+            TOP-SPEED 9
+            ACCEL 9 
+            GRIP 10 
+            CHARGE 8 
+            VehicleScript Spinebuster 
+            SoundArchive Engine01 
+        } 
+        
+    BasicCar 1030 
+        { 
+            Name 370 
+            CatchupSizeVariation 1.5 
+            CatchupSpeedBack 0.7 
+            CatchupSpeedFront 0.4 
+            PercentChanceToUpgradeWeapon 50 
+            TOP-SPEED 6 
+            ACCEL 6 
+            GRIP 7 
+            CHARGE 7 
+            VehicleScript SuperTsunami 
+            SoundArchive Engine01 
+        } 
+        
+    CustomCar 1501 1002 { }
+     
+    CustomCar 1503 1001 { } 
+    
+    CustomCar 1511 1011 { } 
+    
+    CustomCar 1502 1003 { } 
+    
+    CustomCar 1504 1004 { } 
+    
+    CustomCar 1512 1012 { } 
+    
+    CustomCar 1505 1005 { } 
+    
+    CustomCar 1513 1013 { } 
+    
+    CustomCar 1514 1014 { } 
+    
+    CustomCar 1506 1006 { } 
+    
+    CustomCar 1507 1007 { } 
+    
+    CustomCar 1508 1008 { } 
+    
+    CustomCar 1509 1009 { } 
+    
+    CustomCar 1515 1015 { } 
+    
+    CustomCar 1516 1016 { } 
+    
+    CustomCar 1517 1017 { } 
+    
+    CustomCar 1518 1018 { } 
+    
+    CustomCar 1519 1019 { } 
+    
+    CustomCar 1510 1010 { } 
+    
+    CustomCar 1520 1020 { } 
+    
+    CustomCar 1521 1021 { } 
+    
+    CustomCar 1522 1022 { } 
+    
+    CustomCar 1523 1023 { } 
+    
+    CustomCar 1524 1024 { } 
+    
+    CustomCar 1525 1025 { } 
+    
+    CustomCar 1526 1026 { } 
+    
+    CustomCar 1527 1027 { } 
+    
+    CustomCar 1528 1028 { } 
+    
+    CustomCar 1529 1029 { } 
+
+    CustomCar 1530 1030 { } 
+    
+    Character 2503 
+        { 
+            Name 311 
+            Script GUN 
+            KartID 1502 
+            FrontEndPos 4 
+            Attribute1 3 
+            Attribute2 4 
+            Attribute3 3 
+            Availability 0 
+            UnlockGraphic 
+            UnlockGraphicName 
+        } 
+        
+    Character 2514 
+        { 
+            Name 367 
+            Script GUN 
+            KartID 1527 
+            FrontEndPos 4 
+            Attribute1 3 
+            Attribute2 4 
+            Attribute3 3 
+            Availability 0 
+            UnlockGraphic 
+            UnlockGraphicName 
+        } 
+        
+    Character 2518 
+        { 
+            Name 353 
+            Script GUN 
+            KartID 1513 
+            FrontEndPos 4 
+            Attribute1 3 
+            Attribute2 4 
+            Attribute3 3 
+            Availability 0 
+            UnlockGraphic 
+            UnlockGraphicName 
+        } 
+        
+    Character 2509 
+        { 
+            Name 318 
+            Script GUN 
+            KartID 1509 
+            FrontEndPos 4 
+            Attribute1 3 
+            Attribute2 4 
+            Attribute3 3 
+            Availability 0 
+            UnlockGraphic 
+            UnlockGraphicName 
+        } 
+        
+    Character 2527 
+        { 
+            Name 360 
+            Script GUN 
+            KartID 1520 
+            FrontEndPos 4 
+            Attribute1 3 
+            Attribute2 4 
+            Attribute3 3 
+            Availability 0 
+            UnlockGraphic 
+            UnlockGraphicName 
+        } 
+        
+    Character 2526 
+        { 
+            Name 357 
+            Script GUN 
+            KartID 1517 
+            FrontEndPos 4 
+            Attribute1 3 
+            Attribute2 4 
+            Attribute3 3 
+            Availability 0 
+            UnlockGraphic 
+            UnlockGraphicName 
+        } 
+        
+    Character 2504 
+        { 
+            Name 312 
+            Script GUN 
+            KartID 1504 
+            FrontEndPos 4 
+            Attribute1 3 
+            Attribute2 4 
+            Attribute3 3 
+            Availability 0 
+            UnlockGraphic 
+            UnlockGraphicName 
+        } 
+        
+    Character 2505 
+        { 
+            Name 313 
+            Script GUN 
+            KartID 1505 
+            FrontEndPos 4 
+            Attribute1 3 
+            Attribute2 4 
+            Attribute3 3 
+            Availability 0 
+            UnlockGraphic 
+            UnlockGraphicName 
+        } 
+        
+    Character 2528 
+        { 
+            Name 366 
+            Script GUN 
+            KartID 1526 
+            FrontEndPos 4 
+            Attribute1 3 
+            Attribute2 4 
+            Attribute3 3 
+            Availability 0 
+            UnlockGraphic 
+            UnlockGraphicName 
+        } 
+        
+    Character 2517 
+        {
+            Name 356 
+            Script GUN 
+            KartID 1516 
+            FrontEndPos 4
+            Attribute1 3 
+            Attribute2 4 
+            Attribute3 3 
+            Availability 0 
+            UnlockGraphic 
+            UnlockGraphicName 
+        } 
+    
+    Character 2516 
+        { 
+            Name 358 
+            Script GUN 
+            KartID 1518 
+            FrontEndPos 4 
+            Attribute1 3 
+            Attribute2 4 
+            Attribute3 3 
+            Availability 0 
+            UnlockGraphic 
+            UnlockGraphicName
+        } 
+        
+    Character 2508 
+        { 
+            Name 317 
+            Script GUN 
+            KartID 1508 
+            FrontEndPos 4 
+            Attribute1 3 
+            Attribute2 4 
+            Attribute3 3 
+            Availability 0 
+            UnlockGraphic 
+            UnlockGraphicName 
+        } 
+        
+    Character 2523 
+        { Name 363 Script GUN KartID 1523 FrontEndPos 4 Attribute1 3 Attribute2 4 Attribute3 3 Availability 0 UnlockGraphic UnlockGraphicName } Character 2511 { Name 352 Script GUN KartID 1512 FrontEndPos 4 Attribute1 3 Attribute2 4 Attribute3 3 Availability 0 UnlockGraphic UnlockGraphicName } Character 2501 { Name 324 Script GUN KartID 1503 FrontEndPos 4 Attribute1 3 Attribute2 4 Attribute3 3 Availability 0 UnlockGraphic UnlockGraphicName } Character 2506 { Name 315 Script GUN KartID 1506 FrontEndPos 4 Attribute1 3 Attribute2 4 Attribute3 3 Availability 0 UnlockGraphic UnlockGraphicName } Character 2522 { Name 361 Script GUN KartID 1521 FrontEndPos 4 Attribute1 3 Attribute2 4 Attribute3 3 Availability 0 UnlockGraphic UnlockGraphicName } Character 2500 { Name 309 Script GUN KartID 1501 FrontEndPos 4 Attribute1 3 Attribute2 4 Attribute3 3 Availability 0 UnlockGraphic UnlockGraphicName } Character 2515 { Name 370 Script GUN KartID 1530 FrontEndPos 4 Attribute1 3 Attribute2 4 Attribute3 3 Availability 0 UnlockGraphic UnlockGraphicName } Character 2519 { Name 359 Script GUN KartID 1519 FrontEndPos 4 Attribute1 3 Attribute2 4 Attribute3 3 Availability 0 UnlockGraphic UnlockGraphicName } Character 2502 { Name 310 Script GUN KartID 1511 FrontEndPos 4 Attribute1 3 Attribute2 4 Attribute3 3 Availability 0 UnlockGraphic UnlockGraphicName } Character 2520 { Name 365 Script GUN KartID 1525 FrontEndPos 4 Attribute1 3 Attribute2 4 Attribute3 3 Availability 0 UnlockGraphic UnlockGraphicName } Character 2510 { Name 319 Script GUN KartID 1510 FrontEndPos 4 Attribute1 3 Attribute2 4 Attribute3 3 Availability 0 UnlockGraphic UnlockGraphicName } Character 2524 { Name 354 Script GUN KartID 1514 FrontEndPos 4 Attribute1 3 Attribute2 4 Attribute3 3 Availability 0 UnlockGraphic UnlockGraphicName } Character 2525 { Name 355 Script GUN KartID 1515 FrontEndPos 4 Attribute1 3 Attribute2 4 Attribute3 3 Availability 0 UnlockGraphic UnlockGraphicName } Character 2507 { Name 316 Script GUN KartID 1507 FrontEndPos 4 Attribute1 3 Attribute2 4 Attribute3 3 Availability 0 UnlockGraphic UnlockGraphicName } Character 2512 { Name 369 Script GUN KartID 1529 FrontEndPos 4 Attribute1 3 Attribute2 4 Attribute3 3 Availability 0 UnlockGraphic UnlockGraphicName } Character 2521 { Name 362 Script GUN KartID 1522 FrontEndPos 4 Attribute1 3 Attribute2 4 Attribute3 3 Availability 0 UnlockGraphic UnlockGraphicName } Character 2529 { Name 368 Script GUN KartID 1528 FrontEndPos 4 Attribute1 3 Attribute2 4 Attribute3 3 Availability 0 UnlockGraphic UnlockGraphicName } Character 2513 { Name 364 Script GUN KartID 1524 FrontEndPos 4 Attribute1 3 Attribute2 4 Attribute3 3 Availability 0 UnlockGraphic UnlockGraphicName } Event ID_ELIMINATOR_THEME { Name S_TRACK_THEME2 Map MAP-THEME -905.970154 -58.923344 -918.782166 575.271790 177.129425 762.488953 500 315 500 315 0.35 Type EliminatorGM { WorldScript theme EventScript cr000 FlashIntroName 321GO LongTextID S_CR_TESTER_TESTB CatchupSetting 3 NumDrivers 6 NumLaps 5 NumBlocks 4 AIDriverPool 6 { ID_TOONTEAM_COWCHICK ID_TOONTEAM_COURAGE ID_TOONTEAM_DEXTER ID_TOONTEAM_POWPUFF ID_TOONTEAM_WEASEL ID_TOONTEAM_BRAVO } InactivityLimit 2 HasReplays } TournZone ID_GAME_WORLD_OTHER BillBoardID ID_BILLBOARD_3 MenuIndex 6 TrackZone 6 Locked true } Event ID_ELIMINATOR_HHOUSE { Name S_TRACK_HHOUSE2 Map MAP-HHOUSE -696.056396 -15.393347 -469.128082 564.856506 137.213501 496.177063 387 278 387 278 0.35 Type EliminatorGM { WorldScript hhouse EventScript cr000 FlashIntroName 321GO LongTextID S_CR_TESTER_TESTB CatchupSetting 1 NumDrivers 6 NumLaps 5 NumBlocks 4 AIDriverPool 6 { ID_TOONTEAM_COWCHICK ID_TOONTEAM_COURAGE ID_TOONTEAM_DEXTER ID_TOONTEAM_POWPUFF ID_TOONTEAM_WEASEL ID_TOONTEAM_BRAVO } InactivityLimit 2 HasReplays } TournZone ID_GAME_WORLD_OTHER BillBoardID ID_BILLBOARD_4 MenuIndex 2 TrackZone 12 Locked false } Event ID_ELIMINATOR_CASTLE { Name S_TRACK_CASTLE2 Map MAP-CASTLE -833.739136 -36.316120 -681.812073 953.715759 177.049728 446.648041 500 315 500 315 0.35 Type EliminatorGM { WorldScript castle EventScript cr000 FlashIntroName 321GO LongTextID S_CR_TESTER_TESTB CatchupSetting 4 NumDrivers 6 NumLaps 5 NumBlocks 4 AIDriverPool 6 { ID_TOONTEAM_COWCHICK ID_TOONTEAM_COURAGE ID_TOONTEAM_DEXTER ID_TOONTEAM_POWPUFF ID_TOONTEAM_WEASEL ID_TOONTEAM_BRAVO } InactivityLimit 2 HasReplays } PathToAvoid 5 TournZone ID_GAME_WORLD_OTHER BillBoardID ID_BILLBOARD_4 MenuIndex 9 TrackZone 1 Locked true } Event ID_ELIMINATOR_COW { Name S_TRACK_COW2 Map MAP-COW -419.579254 -6.922188 -312.656403 328.366333 307.803314 334.223419 594 304 594 304 0.35 Type EliminatorGM { WorldScript cow EventScript cr000 FlashIntroName 321GO LongTextID S_TRACK_COW1 CatchupSetting 1 NumDrivers 6 NumLaps 5 NumBlocks 4 AIDriverPool 6 { ID_TOONTEAM_COWCHICK ID_TOONTEAM_COURAGE ID_TOONTEAM_DEXTER ID_TOONTEAM_POWPUFF ID_TOONTEAM_WEASEL ID_TOONTEAM_BRAVO } InactivityLimit 2 HasReplays } BillBoardID ID_BILLBOARD_2 TournZone 8001 MenuIndex 0 TrackZone 10 Locked true } Event ID_ELIMINATOR_COWB { Name S_TRACK_COWB2 Map MAP-COWB -322.998993 -2.681092 -309.267578 309.512695 151.246414 331.217407 594 304 594 304 0.5 Type EliminatorGM { WorldScript cowb EventScript cr000 FlashIntroName 321GO LongTextID S_TRACK_COWB1 CatchupSetting 1 NumDrivers 6 NumLaps 5 NumBlocks 4 AIDriverPool 6 { ID_TOONTEAM_COWCHICK ID_TOONTEAM_COURAGE ID_TOONTEAM_DEXTER ID_TOONTEAM_POWPUFF ID_TOONTEAM_WEASEL ID_TOONTEAM_BRAVO } InactivityLimit 2 HasReplays } BillBoardID ID_BILLBOARD_1 TournZone 8001 MenuIndex 1 TrackZone 10 Locked true } Event ID_ELIMINATOR_PINBALL { Name 251 Map MAP-PINBALL -448.966431 -12.410103 -935.997192 753.578552 52.691608 498.344391 316 463 316 463 0.35 Type EliminatorGM { WorldScript pinball EventScript cr000 FlashIntroName 321GO LongTextID S_CR_TESTER_TESTB CatchupSetting 3 NumDrivers 6 NumLaps 5 NumBlocks 4 AIDriverPool 6 { ID_TOONTEAM_COWCHICK ID_TOONTEAM_COURAGE ID_TOONTEAM_DEXTER ID_TOONTEAM_POWPUFF ID_TOONTEAM_WEASEL ID_TOONTEAM_BRAVO } InactivityLimit 2 HasReplays } PathToAvoid 2 TournZone ID_GAME_WORLD_OTHER BillBoardID ID_BILLBOARD_4 MenuIndex 7 TrackZone 7 Locked true } Event ID_ELIMINATOR_ICYMOUNT { Name S_TRACK_ICYMOUNT2 Map MAP-ICYMOUNT -403.510254 -30.198711 -1052.429199 647.990601 343.356018 440.129547 316 463 316 463 0.35 Type EliminatorGM { WorldScript icymount EventScript cr000 FlashIntroName 321GO LongTextID S_CR_TESTER_TESTB CatchupSetting 1 NumDrivers 6 NumLaps 5 NumBlocks 4 AIDriverPool 6 { ID_TOONTEAM_COWCHICK ID_TOONTEAM_COURAGE ID_TOONTEAM_DEXTER ID_TOONTEAM_POWPUFF ID_TOONTEAM_WEASEL ID_TOONTEAM_BRAVO } InactivityLimit 2 HasReplays } BillBoardID ID_BILLBOARD_4 TournZone ID_GAME_WORLD_OTHER TrackZone 11 MenuIndex 4 Locked false } Event ID_ELIMINATOR_CDOG { Name S_TRACK_CDOG2 Map MAP-CDOG -227.394974 -12.335361 -424.278809 324.048767 130.998108 441.291809 316 463 316 463 0.35 Type EliminatorGM { WorldScript cdog EventScript cr000 FlashIntroName 321GO LongTextID S_CR_TESTER_TESTB CatchupSetting 1 NumDrivers 6 NumLaps 5 NumBlocks 4 AIDriverPool 6 { ID_TOONTEAM_COWCHICK ID_TOONTEAM_COURAGE ID_TOONTEAM_DEXTER ID_TOONTEAM_POWPUFF ID_TOONTEAM_WEASEL ID_TOONTEAM_BRAVO } InactivityLimit 2 HasReplays } TournZone ID_GAME_WORLD_COURAGE BillBoardID ID_BILLBOARD_2 MenuIndex 0 Locked true } Event ID_ELIMINATOR_CDOGB { Name S_TRACK_CDOGB2 Map MAP-CDOGB -227.935287 -8.669433 -424.278778 333.126526 130.998077 440.977478 316 463 316 463 0.35 Type EliminatorGM { WorldScript cdogb EventScript cr000 FlashIntroName 321GO LongTextID S_CR_TESTER_TESTB CatchupSetting 0 NumDrivers 6 NumLaps 5 NumBlocks 4 AIDriverPool 6 { ID_TOONTEAM_COWCHICK ID_TOONTEAM_COURAGE ID_TOONTEAM_DEXTER ID_TOONTEAM_POWPUFF ID_TOONTEAM_WEASEL ID_TOONTEAM_BRAVO } InactivityLimit 2 HasReplays } TournZone ID_GAME_WORLD_COURAGE BillBoardID ID_BILLBOARD_1 TrackZone 2 MenuIndex 1 Locked true } Event ID_ELIMINATOR_ROCKY { Name S_TRACK_ROCKY2 Map MAP-ROCKY -586.112671 -16.884342 -538.554382 344.492615 160.135590 438.289673 316 463 316 463 0.25 Type EliminatorGM { WorldScript rocky EventScript cr000 FlashIntroName 321GO LongTextID S_CR_TESTER_TESTB CatchupSetting 2 NumDrivers 6 NumLaps 5 NumBlocks 4 AIDriverPool 6 { ID_TOONTEAM_COWCHICK ID_TOONTEAM_COURAGE ID_TOONTEAM_DEXTER ID_TOONTEAM_POWPUFF ID_TOONTEAM_WEASEL ID_TOONTEAM_BRAVO } InactivityLimit 2 HasReplays } TournZone ID_GAME_WORLD_OTHER BillBoardID ID_BILLBOARD_4 TrackZone 4 MenuIndex 0 PathToAvoid 22 Locked false } Event ID_ELIMINATOR_SPOOKMINE { Name S_TRACK_SPOOKMINE2 Map MAP-SPOOKMINE -697.552673 -80.808800 -708.155762 546.058044 134.848373 477.147095 316 463 316 463 0.25 Type EliminatorGM { WorldScript spookmine EventScript cr000 FlashIntroName 321GO LongTextID S_CR_TESTER_TESTB CatchupSetting 4 NumDrivers 6 NumLaps 5 NumBlocks 4 AIDriverPool 6 { ID_TOONTEAM_COWCHICK ID_TOONTEAM_COURAGE ID_TOONTEAM_DEXTER ID_TOONTEAM_POWPUFF ID_TOONTEAM_WEASEL ID_TOONTEAM_BRAVO } InactivityLimit 2 HasReplays } TournZone ID_GAME_WORLD_OTHER BillBoardID ID_BILLBOARD_3 TrackZone 0 MenuIndex 8 Locked true } Event ID_ELIMINATOR_VOLCANO { Name S_TRACK_VOLCANO2 Map MAP-VOLCANO -447.581665 -31.378380 -1166.013916 1249.495117 304.327118 85.146919 316 463 316 463 0.25 Type EliminatorGM { WorldScript volcano EventScript cr000 FlashIntroName 321GO LongTextID S_CR_TESTER_TESTB CatchupSetting 5 NumDrivers 6 NumLaps 5 NumBlocks 4 AIDriverPool 6 { ID_TOONTEAM_COWCHICK ID_TOONTEAM_COURAGE ID_TOONTEAM_DEXTER ID_TOONTEAM_POWPUFF ID_TOONTEAM_WEASEL ID_TOONTEAM_BRAVO } InactivityLimit 2 HasReplays } TournZone ID_GAME_WORLD_OTHER BillBoardID ID_BILLBOARD_4 TrackZone 16 MenuIndex 11 Locked true } Event ID_ELIMINATOR_JUNGLE { Name S_TRACK_JUNGLE2 Map MAP-JUNGLE -589.920898 -19.188234 -631.388428 308.073120 231.888855 435.284485 316 463 316 463 0.25 Type EliminatorGM { WorldScript jungle EventScript cr000 FlashIntroName 321GO LongTextID S_CR_TESTER_TESTB CatchupSetting 5 NumDrivers 6 NumLaps 5 NumBlocks 4 AIDriverPool 6 { ID_TOONTEAM_COWCHICK ID_TOONTEAM_COURAGE ID_TOONTEAM_DEXTER ID_TOONTEAM_POWPUFF ID_TOONTEAM_WEASEL ID_TOONTEAM_BRAVO } InactivityLimit 2 HasReplays } TournZone ID_GAME_WORLD_OTHER BillBoardID ID_BILLBOARD_3 TrackZone 17 PathToAvoid 4 MenuIndex 10 Locked true } Event ID_ELIMINATOR_FARM { Name S_TRACK_FARM2 Map MAP-FARM -547.936462 -21.163361 -860.941956 215.893494 134.004211 66.965881 316 463 316 463 0.25 Type EliminatorGM { WorldScript farm EventScript cr000 FlashIntroName 321GO LongTextID S_CR_TESTER_TESTB CatchupSetting 1 NumDrivers 6 NumLaps 5 NumBlocks 4 AIDriverPool 6 { ID_TOONTEAM_COWCHICK ID_TOONTEAM_COURAGE ID_TOONTEAM_DEXTER ID_TOONTEAM_POWPUFF ID_TOONTEAM_WEASEL ID_TOONTEAM_BRAVO } InactivityLimit 2 HasReplays } TournZone ID_GAME_WORLD_OTHER BillBoardID ID_BILLBOARD_3 TrackZone 13 MenuIndex 1 Locked false } Event ID_ELIMINATOR_HARBOUR { Name S_TRACK_HARBOUR2 Map MAP-HARBOUR -654.485413 -150.227142 -634.195496 433.816315 297.360413 570.902832 594 304 594 304 0.35 Type EliminatorGM { WorldScript harbour EventScript cr000 FlashIntroName 321GO LongTextID S_CR_TESTER_TESTB CatchupSetting 1 NumDrivers 6 NumLaps 5 NumBlocks 4 AIDriverPool 6 { ID_TOONTEAM_COWCHICK ID_TOONTEAM_COURAGE ID_TOONTEAM_DEXTER ID_TOONTEAM_POWPUFF ID_TOONTEAM_WEASEL ID_TOONTEAM_BRAVO } InactivityLimit 2 HasReplays } BillBoardID ID_BILLBOARD_3 TournZone ID_GAME_WORLD_OTHER TrackZone 9 MenuIndex 3 Locked false } Event ID_ELIMINATOR_WILDWEST { Name S_TRACK_WILDWEST2 Map MAP-WILDWEST -644.921265 -15.616803 -767.846130 327.184540 81.113075 570.951172 316 463 316 463 0.25 Type EliminatorGM { WorldScript wildwest EventScript cr000 FlashIntroName 321GO LongTextID S_CR_TESTER_TESTB CatchupSetting 2 NumDrivers 6 NumLaps 5 NumBlocks 4 AIDriverPool 6 { ID_TOONTEAM_COWCHICK ID_TOONTEAM_COURAGE ID_TOONTEAM_DEXTER ID_TOONTEAM_POWPUFF ID_TOONTEAM_WEASEL ID_TOONTEAM_BRAVO } InactivityLimit 2 HasReplays } TournZone ID_GAME_WORLD_OTHER BillBoardID ID_BILLBOARD_3 TrackZone 3 MenuIndex 5 Locked false } Event ID_ELIMINATOR_POWER { Name S_TRACK_POWER2 Map MAP-POWER -728.079163 -22.275986 -387.170807 735.016113 101.795700 389.340790 594 304 594 304 0.35 Type EliminatorGM { WorldScript power EventScript cr000 FlashIntroName 321GO LongTextID S_CR_TESTER_TESTB CatchupSetting 4 NumDrivers 6 NumLaps 5 NumBlocks 4 AIDriverPool 6 { ID_TOONTEAM_COWCHICK ID_TOONTEAM_COURAGE ID_TOONTEAM_DEXTER ID_TOONTEAM_POWPUFF ID_TOONTEAM_WEASEL ID_TOONTEAM_BRAVO } InactivityLimit 2 HasReplays } TournZone ID_GAME_WORLD_POWERPUFFGIRLS BillBoardID ID_BILLBOARD_2 TrackZone 14 MenuIndex 0 Locked true } Event ID_ELIMINATOR_POWERB { Name S_TRACK_POWERB2 Map MAP-POWERB -527.184814 -22.275986 -387.150848 735.016113 66.108864 387.150818 594 304 594 304 0.35 Type EliminatorGM { WorldScript powerb EventScript cr000 FlashIntroName 321GO LongTextID S_CR_TESTER_TESTB CatchupSetting 4 NumDrivers 6 NumLaps 5 NumBlocks 4 AIDriverPool 6 { ID_TOONTEAM_COWCHICK ID_TOONTEAM_COURAGE ID_TOONTEAM_DEXTER ID_TOONTEAM_POWPUFF ID_TOONTEAM_WEASEL ID_TOONTEAM_BRAVO } InactivityLimit 2 HasReplays } TournZone ID_GAME_WORLD_POWERPUFFGIRLS BillBoardID ID_BILLBOARD_1 TrackZone 14 MenuIndex 1 Locked true } Event ID_ELIMINATOR_DEXTER { Name S_TRACK_DEXTER2 Map MAP-DEXTER -508.413269 40.309757 -377.251892 232.820099 130.578339 582.718628 594 304 594 304 0.35 Type EliminatorGM { WorldScript dexter EventScript cr000 FlashIntroName 321GO LongTextID S_CR_TESTER_TESTB CatchupSetting 5 NumDrivers 6 NumLaps 5 NumBlocks 4 AIDriverPool 6 { ID_TOONTEAM_COWCHICK ID_TOONTEAM_COURAGE ID_TOONTEAM_DEXTER ID_TOONTEAM_POWPUFF ID_TOONTEAM_WEASEL ID_TOONTEAM_BRAVO } InactivityLimit 2 HasReplays } TournZone ID_GAME_WORLD_DEXTERSLAB BillBoardID ID_BILLBOARD_2 TrackZone 15 MenuIndex 0 Locked true } Event ID_ELIMINATOR_DEXTERB { Name S_TRACK_DEXTERB2 Map MAP-DEXTERB -531.145020 16.850388 -431.475159 220.527359 143.103821 518.734070 594 304 594 304 0.35 Type EliminatorGM { WorldScript dexterb EventScript cr000 FlashIntroName 321GO LongTextID S_CR_TESTER_TESTB CatchupSetting 5 NumDrivers 6 NumLaps 5 NumBlocks 4 AIDriverPool 6 { ID_TOONTEAM_COWCHICK ID_TOONTEAM_COURAGE ID_TOONTEAM_DEXTER ID_TOONTEAM_POWPUFF ID_TOONTEAM_WEASEL ID_TOONTEAM_BRAVO } InactivityLimit 2 HasReplays } TournZone ID_GAME_WORLD_DEXTERSLAB BillBoardID ID_BILLBOARD_1 TrackZone 15 MenuIndex 1 Locked true } Event ID_ELIMINATOR_JOHNNY { Name S_TRACK_JOHNNY2 Map MAP-JOHNNY -550.386719 -16.337780 -408.695160 397.226166 81.233658 421.510193 594 304 594 304 0.35 Type EliminatorGM { WorldScript johnny EventScript cr000 FlashIntroName 321GO LongTextID S_CR_TESTER_TESTB CatchupSetting 3 NumDrivers 6 NumLaps 5 NumBlocks 4 AIDriverPool 6 { ID_TOONTEAM_COWCHICK ID_TOONTEAM_COURAGE ID_TOONTEAM_DEXTER ID_TOONTEAM_POWPUFF ID_TOONTEAM_WEASEL ID_TOONTEAM_BRAVO } InactivityLimit 2 HasReplays } TournZone ID_GAME_WORLD_JOHNNYBRAVO BillBoardID ID_BILLBOARD_2 TrackZone 8 MenuIndex 0 Locked true } Event ID_ELIMINATOR_JOHNNYB { Name S_TRACK_JOHNNYB2 Map MAP-JOHNNYB -547.138916 -5.562701 -406.746857 197.533295 49.075710 337.320923 594 304 594 304 0.35 Type EliminatorGM { WorldScript johnnyb EventScript cr000 FlashIntroName 321GO LongTextID S_CR_TESTER_TESTB CatchupSetting 3 NumDrivers 6 NumLaps 5 NumBlocks 4 AIDriverPool 6 { ID_TOONTEAM_COWCHICK ID_TOONTEAM_COURAGE ID_TOONTEAM_DEXTER ID_TOONTEAM_POWPUFF ID_TOONTEAM_WEASEL ID_TOONTEAM_BRAVO } InactivityLimit 2 HasReplays } TournZone ID_GAME_WORLD_JOHNNYBRAVO BillBoardID ID_BILLBOARD_1 TrackZone 8 MenuIndex 1 Locked true } Event ID_ELIMINATOR_IMWEASEL { Name S_TRACK_IMWEASEL2 Map MAP-IMWEASEL -620.741821 -19.692535 -704.413208 529.186279 87.035088 428.549133 594 304 594 304 0.35 594 304 594 304 0.35 Type EliminatorGM { WorldScript imweasel EventScript cr000 FlashIntroName 321GO LongTextID S_CR_TESTER_TESTB CatchupSetting 2 NumDrivers 6 NumLaps 5 NumBlocks 4 AIDriverPool 6 { ID_TOONTEAM_COWCHICK ID_TOONTEAM_COURAGE ID_TOONTEAM_DEXTER ID_TOONTEAM_POWPUFF ID_TOONTEAM_WEASEL ID_TOONTEAM_BRAVO } InactivityLimit 2 HasReplays } TournZone ID_GAME_WORLD_IMWEASEL BillBoardID ID_BILLBOARD_2 TrackZone 5 MenuIndex 0 Locked true } Event ID_ELIMINATOR_IMWEASELB { Name S_TRACK_IMWEASELB2 Map MAP-IMWEASELB -620.741821 -20.081123 -704.413208 368.774139 87.035080 427.610107 594 304 594 304 0.35 Type EliminatorGM { WorldScript imweaselb EventScript cr000 FlashIntroName 321GO LongTextID S_CR_TESTER_TESTB CatchupSetting 2 NumDrivers 6 NumLaps 5 NumBlocks 4 AIDriverPool 6 { ID_TOONTEAM_COWCHICK ID_TOONTEAM_COURAGE ID_TOONTEAM_DEXTER ID_TOONTEAM_POWPUFF ID_TOONTEAM_WEASEL ID_TOONTEAM_BRAVO } InactivityLimit 2 HasReplays } TournZone ID_GAME_WORLD_IMWEASEL BillBoardID ID_BILLBOARD_1 TrackZone 5 MenuIndex 1 Locked true } 
+
+

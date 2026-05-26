@@ -1,4 +1,21 @@
+# Large/generated files
 c/
 HotwheelsBeatThatPC.rep/
 gfs/
 txt/hot-exe-dump.txt
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+*.suo
+*.user
+
+# Build output
+*.o
+*.obj
+*.exe
+*.dll
+*.bin

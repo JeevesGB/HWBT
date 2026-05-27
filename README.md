@@ -42,9 +42,9 @@ HWBT/
 | `.EPD` | Eliminator game mode data |
 | `.GCF` | Game configuration |
 | `.UCP` | Garage/vehicle unlock/config data |
-| `.MOV` | Video/cutscene |
+| `.MOV` |  |
 | `.PTL` | Particle effects |
-| `.CUT` | Tournament results cutscene data |
+| `.CUT` |  |
 | `.TES` | Zone terrain or event script |
 | `.VEH` | Vehicle definition |
 | `.CMS` | Commentary strings |

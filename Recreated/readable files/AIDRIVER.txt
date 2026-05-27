@@ -1,0 +1,164 @@
+
+
+MOVER_AUX MOVER { } 
+
+PATH-MOVER { } 
+
+CHARACTER 
+    { 
+        ANIMATOR 
+            { 
+                NUMANIMNODES 24 
+                SINGLEANIMNODE 0 
+                IG_LEFTRIGHT_01 0.0 
+                SINGLEANIMNODE 1 
+                IG_BRAKEACCEL_01 0.0 
+                BLENDANIMNODE 2 0 1 0.0 
+                SINGLEANIMNODE 3 
+                IG_RESET_01 0.0 
+                SINGLEANIMNODE 4 
+                IG_WIN_01 0.0 
+                SINGLEANIMNODE 5 
+                IG_PLACE_01 0.0 
+                SINGLEANIMNODE 6 
+                IG_LOSE_01 0.0 
+                SINGLEANIMNODE 8 
+                IG_FALL_01 0.0 
+                SINGLEANIMNODE 9 
+                IG_STARTAMB_01 0.0 
+                SINGLEANIMNODE 10 
+                IG_FLAT_01 0.0 
+                SINGLEANIMNODE 11 
+                IG_SPIN_01 0.0 
+                SINGLEANIMNODE 12 
+                IG_DRIFTR_01 0.0 
+                SINGLEANIMNODE 13 
+                IG_DRIFTL_01 0.0 
+                SINGLEANIMNODE 14 
+                IG_BOOST_01 0.0 
+                SINGLEANIMNODE 15 
+                IG_TRACKC_01 0.0 
+                SINGLEANIMNODE 16 
+                IG_CAR_01 0.0 
+                SINGLEANIMNODE 17 
+                IG_BIGAIR_01 0.0 
+                SINGLEANIMNODE 19 
+                IG_REVERSE_01 0.0 
+                SINGLEANIMNODE 20 
+                IG_STOP_01 0.0 
+                SINGLEANIMNODE 21 
+                IG_BIGSTOP_01 0.0 
+                SINGLEANIMNODE 28 
+                IG_TOWIN_01 0.0 
+                SINGLEANIMNODE 29 
+                IG_TOPLACE_01 0.0 
+                SINGLEANIMNODE 30 
+                IG_TOLOSE_01 0.0 
+                SINGLEANIMNODE 18 
+                IG_TOREV_01 0.0 
+            } 
+        
+        MOVEMAN 
+            { 
+                NUMMOVENODES 18 
+                NUMACTIONS 11 
+                NUMGLOBALACTIONS 0 
+                SINANIMMOVENODE 609 
+                Reset 3 
+                SINANIMMOVENODE 601 
+                Win 4 
+                SINANIMMOVENODE 602 
+                Place 5 
+                SINANIMMOVENODE 603 
+                Lose 6 
+                SINANIMMOVENODE 608 
+                FallDeath 8 
+                SINANIMMOVENODE 600 
+                StartAmb 9 
+                SINANIMMOVENODE 610 
+                Riding 2 
+                SINANIMMOVENODE 611 
+                TrackDeath 10 
+                SINANIMMOVENODE 612 
+                FallDeath 11 
+                SINANIMMOVENODE 613 
+                DriftR 12 
+                SINANIMMOVENODE 614 
+                DriftL 13 
+                SINANIMMOVENODE 615 
+                Boost 14 
+                SINANIMMOVENODE 616 
+                TrackCollision 15 
+                SINANIMMOVENODE 617 
+                CarCollision 16 
+                SINANIMMOVENODE 618 
+                BigAir 17 
+                SINANIMMOVENODE 619 
+                Reverse 19 
+                SINANIMMOVENODE 620 
+                Stop 20 
+                SINANIMMOVENODE 621 
+                BigStop 21 
+                NUMMOVELINKS 30 
+                BASICLINK 609 610 5 
+                CALLBACK 
+                ANIMNODELINK 610 601 1 
+                CALLBACK 28 1 
+                ANIMNODELINK 610 602 1 
+                CALLBACK 29 1 
+                ANIMNODELINK 610 603 1 
+                CALLBACK 30 1 
+                BASICLINK 610 608 0 
+                CALLBACK 
+                TRANSLINK 600 610 4 
+                CALLBACK 0.1 
+                TRANSLINK 610 611 1 
+                CALLBACK 0.1 
+                TRANSLINK 610 612 1 
+                CALLBACK 0.1 
+                TRANSLINK 611 610 4 
+                CALLBACK 0.1 
+                TRANSLINK 612 610 4 
+                CALLBACK 0.1 
+                TRANSLINK 610 613 1 
+                CALLBACK 0.1 
+                TRANSLINK 610 614 1 
+                CALLBACK 0.1 
+                TRANSLINK 613 610 4 
+                CALLBACK 0.1 
+                TRANSLINK 614 610 4 
+                CALLBACK 0.1 
+                TRANSLINK 610 615 1 
+                CALLBACK 0.1 
+                TRANSLINK 615 610 4 
+                CALLBACK 0.1 
+                BASICLINK 610 616 0 
+                CALLBACK 
+                BASICLINK 610 617 0 
+                CALLBACK 
+                BASICLINK 616 610 5 
+                CALLBACK 
+                BASICLINK 617 610 5 
+                CALLBACK 
+                BASICLINK 610 618 0 
+                CALLBACK 
+                BASICLINK 618 610 5 
+                CALLBACK 
+                ANIMNODELINK 610 619 1 
+                CALLBACK 18 1 
+                ANIMNODELINK 619 610 4 
+                CALLBACK 18 0 
+                TRANSLINK 610 620 1 
+                CALLBACK 0.1 
+                TRANSLINK 610 621 0 
+                CALLBACK 0.1 
+                TRANSLINK 620 610 4 
+                CALLBACK 0.1 
+                TRANSLINK 620 621 0 
+                CALLBACK 0.1 
+                TRANSLINK 621 620 2 
+                CALLBACK 0.1 
+                TRANSLINK 621 610 3 
+                CALLBACK 0.1 
+            } 
+    } 

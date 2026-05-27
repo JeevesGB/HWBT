@@ -1,0 +1,26 @@
+
+
+    ZONE2BA000.LAS 
+
+    zone2_Dinosaurs 
+        DinoNeck01 
+        DinoHead01 
+        DinoJaw01 
+        DinoTail01A 
+        DinoTail01B 
+        DinoTail01C 
+        DinoTail01D 
+        DinoNeck02 
+        DinoHead02 
+        DinoJaw02 
+        DinoTail02A 
+        DinoTail02B 
+        DinoTail02C 
+        DinoTail02D 
+
+    zone2001_goldfish 
+        floaters2 
+        fishjaw 
+        fish01 
+        fish02 
+        fishtail 

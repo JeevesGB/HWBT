@@ -1,7 +1,12 @@
 # Large/generated files
-HotwheelsBeatThatPC.rep/
-gfs/
-txt/hot-exe-dump.txt
+GameFiles/
+Text/hot-exe-dump.txt
+
+# Ghidra - exclude personal/local files but keep analysis
+Ghidra/HotwheelsBeatThatPC.rep/project.prp
+Ghidra/HotwheelsBeatThatPC.rep/projectState
+Ghidra/HotwheelsBeatThatPC.rep/idata/
+Ghidra/HotwheelsBeatThatPC.rep/user/
 
 # OS files
 .DS_Store

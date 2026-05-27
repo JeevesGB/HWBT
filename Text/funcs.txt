@@ -1,0 +1,12 @@
+
+
+007043fa	-	FUN_00704ad8
+		void entry(void) 
+		{ 
+			FUN_00704ad8();
+			FUN_007040dd();
+			return;
+		}
+		
+		
+07043ff 

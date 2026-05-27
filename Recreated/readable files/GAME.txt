@@ -1,0 +1,20 @@
+    Zones 
+    { 
+        Zone 13000 { Name 320 NumEpisodes 2 { 2001 2009 } TournamentReward 1503 1519 1515 Requirement 0 146 420 ACH 10 15 20 } 
+        Zone 13001 { Name 321 NumEpisodes 2 { 2003 2010 } TournamentReward 1506 1511 1507 Requirement 32 251 477 ACH 11 16 21 } 
+        Zone 13002 { Name 455 NumEpisodes 2 { 2005 2011 } TournamentReward 1521 1525 1529 Requirement 89 306 524 ACH 12 17 22 } 
+        Zone 13003 { Name 456 NumEpisodes 2 { 2007 2012 } Requirement 146 363 581 TournamentReward 1501 1510 1522 ProgressionReward 1530 1514 1528 14000 14001 14002 ACH 13 18 23 } 
+    } 
+    
+    Episodes 
+    { 
+        Total 8 TotalCharacters 30 
+        Episode 2001 { Name 325 DataFile Zone1.epd TotalBasicCars 30 TotalCustomCars 30 TotalEvents 18 TotalKartTeams 6 } 
+        Episode 2009 { Name 343 DataFile Zone1Tester.epd TotalBasicCars 30 TotalCustomCars 30 TotalEvents 5 TotalKartTeams 6 } 
+        Episode 2003 { Name 371 DataFile Zone2.epd TotalBasicCars 30 TotalCustomCars 30 TotalEvents 18 TotalKartTeams 6 } 
+        Episode 2010 { Name 344 DataFile Zone2Tester.epd TotalBasicCars 30 TotalCustomCars 30 TotalEvents 5 TotalKartTeams 6 } 
+        Episode 2005 { Name 421 DataFile Zone3.epd TotalBasicCars 30 TotalCustomCars 30 TotalEvents 18 TotalKartTeams 6 } 
+        Episode 2011 { Name 345 DataFile Zone3Tester.epd TotalBasicCars 30 TotalCustomCars 30 TotalEvents 5 TotalKartTeams 6 } 
+        Episode 2007 { Name 422 DataFile Zone4.epd TotalBasicCars 30 TotalCustomCars 30 TotalEvents 18 TotalKartTeams 6 } 
+        Episode 2012 { Name 346 DataFile Zone4Tester.epd TotalBasicCars 30 TotalCustomCars 30 TotalEvents 4 TotalKartTeams 6 } 
+    } 

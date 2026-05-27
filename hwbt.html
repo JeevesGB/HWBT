@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hot Wheels Beat That — File Editor</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;500;700&display=swap');
+
+  :root {
+    --flame: #ff4400;
+    --flame2: #ff8800;
+    --neon: #00ffcc;
+    --neon2: #00aaff;
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #1a1a28;
+    --surface3: #22223a;
+    --border: #2a2a45;
+    --text: #e8e8ff;
+    --text-dim: #7070a0;
+    --stat-bg: #0d1a14;
+    --gold: #ffcc00;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Rajdhani', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Scanline overlay */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  header {
+    background: linear-gradient(135deg, #0d0d1a 0%, #1a0a00 50%, #0d0d1a 100%);
+    border-bottom: 2px solid var(--flame);
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 0 40px rgba(255,68,0,0.3);
+  }
+
+  .logo {
+    font-family: 'Orbitron', monospace;
+    font-size: 22px;
+    font-weight: 900;
+    background: linear-gradient(90deg, var(--flame), var(--flame2), var(--gold));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    letter-spacing: 2px;
+    text-shadow: none;
+    flex: 1;
+  }
+
+  .logo span {
+    font-size: 11px;
+    display: block;
+    font-weight: 400;
+    background: linear-gradient(90deg, var(--neon), var(--neon2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    letter-spacing: 4px;
+    margin-top: 2px;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 4px;
+  }
+
+  .tab-btn {
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 8px 18px;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .tab-btn.active {
+    background: linear-gradient(135deg, rgba(255,68,0,0.2), rgba(255,136,0,0.1));
+    border-color: var(--flame);
+    color: var(--flame2);
+  }
+
+  .tab-btn:hover:not(.active) { color: var(--text); border-color: var(--border); }
+
+  /* File drop zone */
+  .drop-zone {
+    border: 2px dashed var(--border);
+    border-radius: 12px;
+    padding: 48px 32px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: var(--surface);
+    margin: 32px;
+  }
+
+  .drop-zone:hover, .drop-zone.dragover {
+    border-color: var(--flame);
+    background: rgba(255,68,0,0.05);
+    box-shadow: 0 0 30px rgba(255,68,0,0.2) inset;
+  }
+
+  .drop-icon { font-size: 48px; margin-bottom: 12px; }
+  .drop-zone h3 { font-family: 'Orbitron', monospace; font-size: 14px; color: var(--flame2); margin-bottom: 8px; }
+  .drop-zone p { font-size: 13px; color: var(--text-dim); }
+  .drop-zone .ext-badge {
+    display: inline-block;
+    margin: 8px 4px 0;
+    padding: 3px 10px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--neon);
+  }
+
+  /* Main layout */
+  .editor-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    height: calc(100vh - 73px);
+  }
+
+  /* Sidebar */
+  .sidebar {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sidebar-header {
+    padding: 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface2);
+    position: sticky; top: 0;
+  }
+
+  .sidebar-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+
+  .file-info {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    color: var(--neon);
+    word-break: break-all;
+  }
+
+  .car-list { list-style: none; padding: 8px; flex: 1; }
+
+  .car-item {
+    border-radius: 6px;
+    padding: 10px 12px;
+    cursor: pointer;
+    margin-bottom: 4px;
+    border: 1px solid transparent;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .car-item:hover { background: var(--surface2); border-color: var(--border); }
+
+  .car-item.active {
+    background: linear-gradient(135deg, rgba(255,68,0,0.15), rgba(255,136,0,0.08));
+    border-color: var(--flame);
+  }
+
+  .car-color-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .car-item-name {
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text);
+    flex: 1;
+  }
+
+  .car-item.active .car-item-name { color: var(--flame2); }
+
+  .car-item-id {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+  }
+
+  .stat-mini {
+    display: flex;
+    gap: 3px;
+    margin-top: 4px;
+  }
+
+  .stat-pip {
+    width: 6px; height: 4px;
+    border-radius: 1px;
+    background: var(--border);
+  }
+
+  .stat-pip.filled { background: var(--flame2); }
+
+  /* Main panel */
+  .main-panel {
+    overflow-y: auto;
+    padding: 0;
+    background: var(--bg);
+  }
+
+  .panel-header {
+    padding: 20px 32px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: sticky; top: 0;
+    z-index: 10;
+  }
+
+  .panel-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 20px;
+    font-weight: 900;
+    background: linear-gradient(90deg, var(--text), var(--neon2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    flex: 1;
+  }
+
+  .btn {
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    padding: 9px 20px;
+    border-radius: 5px;
+    border: 1px solid;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 700;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, rgba(255,68,0,0.3), rgba(255,136,0,0.2));
+    border-color: var(--flame);
+    color: var(--flame2);
+  }
+
+  .btn-primary:hover {
+    background: linear-gradient(135deg, rgba(255,68,0,0.5), rgba(255,136,0,0.3));
+    box-shadow: 0 0 15px rgba(255,68,0,0.4);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    border-color: var(--border);
+    color: var(--text-dim);
+  }
+
+  .btn-secondary:hover { border-color: var(--neon); color: var(--neon); }
+
+  .btn-success {
+    background: linear-gradient(135deg, rgba(0,255,136,0.2), rgba(0,170,255,0.1));
+    border-color: var(--neon);
+    color: var(--neon);
+  }
+
+  .btn-success:hover {
+    background: linear-gradient(135deg, rgba(0,255,136,0.35), rgba(0,170,255,0.2));
+    box-shadow: 0 0 15px rgba(0,255,204,0.3);
+  }
+
+  /* Content sections */
+  .content-area { padding: 24px 32px; }
+
+  .section-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+
+  .section-card-header {
+    padding: 12px 20px;
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-card-icon { font-size: 16px; }
+
+  .section-card-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--flame2);
+  }
+
+  .section-body { padding: 20px; }
+
+  /* Form fields */
+  .field-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+
+  .field-group { display: flex; flex-direction: column; gap: 6px; }
+
+  .field-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+
+  .field-input {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 9px 12px;
+    color: var(--text);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 13px;
+    transition: all 0.2s;
+    width: 100%;
+  }
+
+  .field-input:focus {
+    outline: none;
+    border-color: var(--neon2);
+    box-shadow: 0 0 0 2px rgba(0,170,255,0.15);
+  }
+
+  .field-input.modified {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 2px rgba(255,204,0,0.15);
+  }
+
+  /* Stat slider */
+  .stat-row {
+    display: grid;
+    grid-template-columns: 140px 1fr 60px;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .stat-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+  }
+
+  .stat-bar-track {
+    background: var(--surface3);
+    border-radius: 3px;
+    height: 8px;
+    position: relative;
+    overflow: visible;
+  }
+
+  .stat-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.3s;
+    position: relative;
+  }
+
+  .stat-bar-fill::after {
+    content: '';
+    position: absolute;
+    right: 0; top: -2px;
+    width: 4px; height: 12px;
+    background: white;
+    border-radius: 2px;
+    box-shadow: 0 0 6px rgba(255,255,255,0.5);
+  }
+
+  input[type="range"].stat-slider {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    margin: 0;
+  }
+
+  .stat-value {
+    font-family: 'Orbitron', monospace;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  /* VEH specific styling */
+  .veh-section { margin-bottom: 24px; }
+
+  .axle-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  /* Summary bar at top */
+  .stat-summary-bar {
+    display: flex;
+    gap: 20px;
+    padding: 16px 20px;
+    background: var(--stat-bg);
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .summary-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 100px;
+  }
+
+  .summary-stat-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+  }
+
+  .summary-stat-bar {
+    display: flex;
+    gap: 2px;
+  }
+
+  .summary-pip {
+    width: 14px; height: 5px;
+    border-radius: 1px;
+    background: var(--border);
+    transition: background 0.3s;
+  }
+
+  .summary-pip.on { background: var(--flame2); }
+  .summary-pip.on.high { background: var(--neon); }
+
+  .summary-stat-num {
+    font-family: 'Orbitron', monospace;
+    font-size: 18px;
+    font-weight: 900;
+  }
+
+  /* Empty state */
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 12px;
+    color: var(--text-dim);
+    padding: 40px;
+  }
+
+  .empty-state-icon { font-size: 64px; opacity: 0.3; }
+  .empty-state h3 { font-family: 'Orbitron', monospace; font-size: 14px; color: var(--border); }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 24px; right: 24px;
+    background: var(--surface2);
+    border: 1px solid var(--neon);
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    color: var(--neon);
+    z-index: 9999;
+    box-shadow: 0 0 20px rgba(0,255,204,0.3);
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s;
+  }
+
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* Hidden file input */
+  #file-input-epd, #file-input-veh { display: none; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--surface); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--flame); }
+
+  .badge {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    padding: 2px 7px;
+    border-radius: 10px;
+    border: 1px solid;
+    letter-spacing: 0.5px;
+  }
+
+  .badge-epd { border-color: var(--flame); color: var(--flame2); }
+  .badge-veh { border-color: var(--neon2); color: var(--neon); }
+
+  .hidden { display: none !important; }
+
+  textarea.field-input {
+    resize: vertical;
+    min-height: 60px;
+    line-height: 1.5;
+  }
+
+  .back-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    cursor: pointer;
+    font-size: 18px;
+    transition: color 0.2s;
+  }
+  .back-btn:hover { color: var(--flame2); }
+
+  .warning-banner {
+    background: rgba(255,204,0,0.08);
+    border: 1px solid rgba(255,204,0,0.3);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--gold);
+    margin-bottom: 20px;
+    font-family: 'Share Tech Mono', monospace;
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 16px 0;
+  }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    HOT WHEELS: BEAT THAT
+    <span>FILE EDITOR v1.0</span>
+  </div>
+  <div class="tabs" id="main-tabs">
+    <button class="tab-btn active" onclick="switchMode('epd')" id="tab-epd">EPD — VEHICLES</button>
+    <button class="tab-btn" onclick="switchMode('veh')" id="tab-veh">VEH — PHYSICS</button>
+  </div>
+</header>
+
+<div id="toast" class="toast"></div>
+<input type="file" id="file-input-epd" accept=".epd,.EPD">
+<input type="file" id="file-input-veh" accept=".veh,.VEH">
+
+<!-- EPD Mode -->
+<div id="mode-epd">
+  <div id="epd-drop" class="drop-zone" onclick="document.getElementById('file-input-epd').click()">
+    <div class="drop-icon">🏎️</div>
+    <h3>LOAD EPD FILE</h3>
+    <p>Vehicle stats database — contains all car ratings</p>
+    <div><span class="ext-badge">.EPD</span></div>
+    <p style="margin-top:16px;font-size:11px;color:var(--text-dim)">Click or drag & drop</p>
+  </div>
+
+  <div id="epd-editor" class="editor-layout hidden">
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-title">EPD — VEHICLE DATABASE</div>
+        <div class="file-info" id="epd-filename">—</div>
+      </div>
+      <ul class="car-list" id="car-list"></ul>
+    </div>
+
+    <div class="main-panel" id="epd-main-panel">
+      <div class="empty-state" id="epd-empty">
+        <div class="empty-state-icon">⬅️</div>
+        <h3>SELECT A VEHICLE</h3>
+        <p style="font-size:13px">Choose a car from the sidebar to edit its stats</p>
+      </div>
+      <div id="epd-car-editor" class="hidden">
+        <div class="stat-summary-bar" id="stat-summary-bar"></div>
+        <div class="panel-header">
+          <div class="panel-title" id="epd-car-title">—</div>
+          <span class="badge badge-epd" id="epd-car-id">—</span>
+          <button class="btn btn-success" onclick="saveEPD()">⬇ SAVE EPD</button>
+        </div>
+        <div class="content-area">
+          <div class="warning-banner">⚠ Values in this file use a 1–10 scale. Edit and save to regenerate the binary file.</div>
+
+          <div class="section-card">
+            <div class="section-card-header">
+              <span class="section-card-icon">⚡</span>
+              <span class="section-card-title">PERFORMANCE STATS</span>
+            </div>
+            <div class="section-body">
+              <div class="stat-row">
+                <span class="stat-label">TOP-SPEED</span>
+                <div class="stat-bar-track">
+                  <div class="stat-bar-fill" id="bar-TOP-SPEED" style="background: linear-gradient(90deg,#ff4400,#ff8800)"></div>
+                  <input type="range" class="stat-slider" min="1" max="10" oninput="updateStat('TOP-SPEED', this.value)">
+                </div>
+                <span class="stat-value" id="val-TOP-SPEED" style="color:var(--flame2)">—</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-label">ACCEL</span>
+                <div class="stat-bar-track">
+                  <div class="stat-bar-fill" id="bar-ACCEL" style="background: linear-gradient(90deg,#ff6600,#ffaa00)"></div>
+                  <input type="range" class="stat-slider" min="1" max="10" oninput="updateStat('ACCEL', this.value)">
+                </div>
+                <span class="stat-value" id="val-ACCEL" style="color:#ffaa00">—</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-label">GRIP</span>
+                <div class="stat-bar-track">
+                  <div class="stat-bar-fill" id="bar-GRIP" style="background: linear-gradient(90deg,#00aaff,#00ffcc)"></div>
+                  <input type="range" class="stat-slider" min="1" max="10" oninput="updateStat('GRIP', this.value)">
+                </div>
+                <span class="stat-value" id="val-GRIP" style="color:var(--neon2)">—</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-label">CHARGE</span>
+                <div class="stat-bar-track">
+                  <div class="stat-bar-fill" id="bar-CHARGE" style="background: linear-gradient(90deg,#aa00ff,#ff00aa)"></div>
+                  <input type="range" class="stat-slider" min="1" max="10" oninput="updateStat('CHARGE', this.value)">
+                </div>
+                <span class="stat-value" id="val-CHARGE" style="color:#dd44ff">—</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-card">
+            <div class="section-card-header">
+              <span class="section-card-icon">🎮</span>
+              <span class="section-card-title">AI / CATCHUP SETTINGS</span>
+            </div>
+            <div class="section-body">
+              <div class="field-grid">
+                <div class="field-group">
+                  <label class="field-label">CatchupSizeVariation</label>
+                  <input type="number" class="field-input" id="fi-CatchupSizeVariation" step="0.1" onchange="setCarField('CatchupSizeVariation', this.value)">
+                </div>
+                <div class="field-group">
+                  <label class="field-label">CatchupSpeedBack</label>
+                  <input type="number" class="field-input" id="fi-CatchupSpeedBack" step="0.05" onchange="setCarField('CatchupSpeedBack', this.value)">
+                </div>
+                <div class="field-group">
+                  <label class="field-label">CatchupSpeedFront</label>
+                  <input type="number" class="field-input" id="fi-CatchupSpeedFront" step="0.05" onchange="setCarField('CatchupSpeedFront', this.value)">
+                </div>
+                <div class="field-group">
+                  <label class="field-label">PercentChanceToUpgradeWeapon</label>
+                  <input type="number" class="field-input" id="fi-PercentChanceToUpgradeWeapon" min="0" max="100" onchange="setCarField('PercentChanceToUpgradeWeapon', this.value)">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-card">
+            <div class="section-card-header">
+              <span class="section-card-icon">🔧</span>
+              <span class="section-card-title">VEHICLE METADATA</span>
+            </div>
+            <div class="section-body">
+              <div class="field-grid">
+                <div class="field-group">
+                  <label class="field-label">Vehicle ID</label>
+                  <input type="text" class="field-input" id="fi-id" readonly style="opacity:0.5">
+                </div>
+                <div class="field-group">
+                  <label class="field-label">Name (ID)</label>
+                  <input type="text" class="field-input" id="fi-Name" onchange="setCarField('Name', this.value)">
+                </div>
+                <div class="field-group">
+                  <label class="field-label">VehicleScript</label>
+                  <input type="text" class="field-input" id="fi-VehicleScript" onchange="setCarField('VehicleScript', this.value)">
+                </div>
+                <div class="field-group">
+                  <label class="field-label">SoundArchive</label>
+                  <input type="text" class="field-input" id="fi-SoundArchive" onchange="setCarField('SoundArchive', this.value)">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VEH Mode -->
+<div id="mode-veh" class="hidden">
+  <div id="veh-drop" class="drop-zone" onclick="document.getElementById('file-input-veh').click()">
+    <div class="drop-icon">⚙️</div>
+    <h3>LOAD VEH FILE</h3>
+    <p>Vehicle physics definition — suspension, gearbox, dynamics</p>
+    <div><span class="ext-badge">.VEH</span></div>
+    <p style="margin-top:16px;font-size:11px;color:var(--text-dim)">Click or drag & drop</p>
+  </div>
+
+  <div id="veh-editor" class="editor-layout hidden" style="display:block !important; grid-template-columns: 1fr;">
+    <div class="panel-header">
+      <div class="panel-title" id="veh-title">—</div>
+      <span class="badge badge-veh" id="veh-type-badge">—</span>
+      <button class="btn btn-success" onclick="saveVEH()">⬇ SAVE VEH</button>
+    </div>
+    <div class="content-area" id="veh-content" style="max-width:900px;margin:0 auto;"></div>
+  </div>
+</div>
+
+<script>
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let epdRawBytes = null;
+let epdCars = [];
+let selectedCarIdx = -1;
+let modifiedCars = new Set();
+
+let vehRawBytes = null;
+let vehTokens = [];
+let vehFields = {};
+
+const STAT_COLORS = {
+  'TOP-SPEED': '#ff4400',
+  'ACCEL': '#ff8800',
+  'GRIP': '#00aaff',
+  'CHARGE': '#aa44ff'
+};
+
+// ─── MODE SWITCH ─────────────────────────────────────────────────────────────
+function switchMode(mode) {
+  document.getElementById('mode-epd').classList.toggle('hidden', mode !== 'epd');
+  document.getElementById('mode-veh').classList.toggle('hidden', mode !== 'veh');
+  document.getElementById('tab-epd').classList.toggle('active', mode === 'epd');
+  document.getElementById('tab-veh').classList.toggle('active', mode === 'veh');
+}
+
+// ─── TOAST ───────────────────────────────────────────────────────────────────
+function showToast(msg, color = 'var(--neon)') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.borderColor = color;
+  t.style.color = color;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ─── NULL-DELIMITED PARSER ───────────────────────────────────────────────────
+function parseNullDelimited(bytes) {
+  const text = new TextDecoder('ascii').decode(bytes);
+  return text.split('\x00');
+}
+
+function buildNullDelimited(tokens) {
+  return new TextEncoder().encode(tokens.join('\x00'));
+}
+
+// ─── EPD PARSER ──────────────────────────────────────────────────────────────
+function parseEPD(bytes) {
+  const tokens = parseNullDelimited(bytes);
+  const cars = [];
+  let i = 0;
+  while (i < tokens.length) {
+    if (tokens[i] === 'BasicCar') {
+      const car = { id: tokens[i + 1], _tokenStart: i };
+      let j = i + 2;
+      if (tokens[j] === '{') j++;
+      while (j < tokens.length && tokens[j] !== '}' && tokens[j] !== 'BasicCar') {
+        const key = tokens[j];
+        const val = tokens[j + 1] !== undefined ? tokens[j + 1] : '';
+        if (key !== '') car[key] = val;
+        j += 2;
+      }
+      car._tokenEnd = j;
+      cars.push(car);
+      i = j;
+    } else {
+      i++;
+    }
+  }
+  return { tokens, cars };
+}
+
+function serializeEPD(tokens, cars) {
+  // Rebuild tokens from cars
+  const newTokens = [];
+  for (const car of cars) {
+    newTokens.push('BasicCar', car.id, '{',
+      'Name', car.Name,
+      'CatchupSizeVariation', car.CatchupSizeVariation,
+      'CatchupSpeedBack', car.CatchupSpeedBack,
+      'CatchupSpeedFront', car.CatchupSpeedFront,
+      'PercentChanceToUpgradeWeapon', car.PercentChanceToUpgradeWeapon,
+      'TOP-SPEED', car['TOP-SPEED'],
+      'ACCEL', car.ACCEL,
+      'GRIP', car.GRIP,
+      'CHARGE', car.CHARGE,
+      'VehicleScript', car.VehicleScript,
+      'SoundArchive', car.SoundArchive,
+    '}');
+  }
+  // Add trailing null
+  newTokens.push('');
+  return buildNullDelimited(newTokens);
+}
+
+// ─── EPD UI ───────────────────────────────────────────────────────────────────
+const CAR_COLORS = ['#ff4400','#ff8800','#ffcc00','#00ff88','#00aaff','#aa44ff','#ff44aa','#44ffaa','#ff6644','#44aaff','#ffaa44','#aa88ff'];
+
+function loadEPDUI(filename, bytes) {
+  epdRawBytes = bytes;
+  const { tokens, cars } = parseEPD(bytes);
+  epdCars = cars;
+
+  document.getElementById('epd-drop').classList.add('hidden');
+  document.getElementById('epd-editor').classList.remove('hidden');
+  document.getElementById('epd-filename').textContent = filename;
+
+  const list = document.getElementById('car-list');
+  list.innerHTML = '';
+  cars.forEach((car, idx) => {
+    const li = document.createElement('li');
+    li.className = 'car-item';
+    li.onclick = () => selectCar(idx);
+    const color = CAR_COLORS[idx % CAR_COLORS.length];
+    const speed = parseInt(car['TOP-SPEED']) || 0;
+    const pips = Array.from({length:10}, (_,i) => `<div class="stat-pip${i < speed ? ' filled' : ''}"></div>`).join('');
+    li.innerHTML = `
+      <div class="car-color-dot" style="background:${color}"></div>
+      <div style="flex:1;min-width:0">
+        <div class="car-item-name">${car.VehicleScript || car.id}</div>
+        <div class="stat-mini">${pips}</div>
+      </div>
+      <div class="car-item-id">#${car.id}</div>`;
+    li.id = `car-item-${idx}`;
+    list.appendChild(li);
+  });
+
+  selectCar(0);
+}
+
+function selectCar(idx) {
+  // Deselect prev
+  if (selectedCarIdx >= 0) {
+    document.getElementById(`car-item-${selectedCarIdx}`)?.classList.remove('active');
+  }
+  selectedCarIdx = idx;
+  document.getElementById(`car-item-${idx}`)?.classList.add('active');
+
+  const car = epdCars[idx];
+  document.getElementById('epd-empty').classList.add('hidden');
+  document.getElementById('epd-car-editor').classList.remove('hidden');
+  document.getElementById('epd-car-title').textContent = car.VehicleScript || car.id;
+  document.getElementById('epd-car-id').textContent = `ID: ${car.id}`;
+
+  // Update summary bar
+  updateSummaryBar(car);
+
+  // Stats
+  for (const stat of ['TOP-SPEED','ACCEL','GRIP','CHARGE']) {
+    const v = parseInt(car[stat]) || 0;
+    document.getElementById(`val-${stat}`).textContent = v;
+    const bar = document.getElementById(`bar-${stat}`);
+    bar.style.width = `${v * 10}%`;
+    // Update slider
+    const slider = bar.parentElement.querySelector('input[type=range]');
+    if (slider) slider.value = v;
+  }
+
+  // Other fields
+  for (const f of ['id','Name','CatchupSizeVariation','CatchupSpeedBack','CatchupSpeedFront','PercentChanceToUpgradeWeapon','VehicleScript','SoundArchive']) {
+    const el = document.getElementById(`fi-${f}`);
+    if (el) el.value = car[f] || '';
+  }
+}
+
+function updateSummaryBar(car) {
+  const bar = document.getElementById('stat-summary-bar');
+  const stats = [
+    { key: 'TOP-SPEED', label: 'SPEED', color: '#ff4400' },
+    { key: 'ACCEL', label: 'ACCEL', color: '#ff8800' },
+    { key: 'GRIP', label: 'GRIP', color: '#00aaff' },
+    { key: 'CHARGE', label: 'CHARGE', color: '#aa44ff' },
+  ];
+  bar.innerHTML = stats.map(s => {
+    const v = parseInt(car[s.key]) || 0;
+    const pips = Array.from({length:10}, (_,i) => {
+      const on = i < v;
+      const high = on && v >= 8;
+      return `<div class="summary-pip${on ? ' on' : ''}${high ? ' high' : ''}" style="${on ? `background:${s.color}` : ''}"></div>`;
+    }).join('');
+    return `<div class="summary-stat">
+      <div class="summary-stat-label">${s.label}</div>
+      <div class="summary-stat-bar">${pips}</div>
+      <div class="summary-stat-num" style="color:${s.color}">${v}</div>
+    </div>`;
+  }).join('');
+}
+
+function updateStat(stat, val) {
+  if (selectedCarIdx < 0) return;
+  val = Math.max(1, Math.min(10, parseInt(val)));
+  epdCars[selectedCarIdx][stat] = String(val);
+  document.getElementById(`val-${stat}`).textContent = val;
+  document.getElementById(`bar-${stat}`).style.width = `${val * 10}%`;
+  modifiedCars.add(selectedCarIdx);
+  updateSummaryBar(epdCars[selectedCarIdx]);
+  // Refresh pip in sidebar
+  const car = epdCars[selectedCarIdx];
+  const speed = parseInt(car['TOP-SPEED']) || 0;
+  const li = document.getElementById(`car-item-${selectedCarIdx}`);
+  if (li) {
+    const mini = li.querySelector('.stat-mini');
+    if (mini) mini.innerHTML = Array.from({length:10}, (_,i) => `<div class="stat-pip${i < speed ? ' filled' : ''}"></div>`).join('');
+  }
+}
+
+function setCarField(field, val) {
+  if (selectedCarIdx < 0) return;
+  epdCars[selectedCarIdx][field] = val;
+  modifiedCars.add(selectedCarIdx);
+}
+
+function saveEPD() {
+  if (!epdCars.length) return;
+  const bytes = serializeEPD(null, epdCars);
+  downloadBytes(bytes, document.getElementById('epd-filename').textContent || 'output.epd');
+  showToast('✓ EPD FILE SAVED');
+}
+
+// ─── VEH PARSER ──────────────────────────────────────────────────────────────
+function parseVEH(bytes) {
+  const tokens = parseNullDelimited(bytes);
+  const fields = {};
+
+  // Extract key-value pairs in a flat pass
+  for (let i = 0; i < tokens.length - 1; i++) {
+    const t = tokens[i];
+    const n = tokens[i + 1];
+    if (!t || t === '{' || t === '}') continue;
+    if (n && n !== '{' && n !== '}') {
+      if (!fields[t]) fields[t] = [];
+      fields[t].push({ value: n, tokenIdx: i + 1 });
+    }
+  }
+
+  return { tokens: [...tokens], fields };
+}
+
+function VEH_SECTIONS() {
+  return [
+    {
+      icon: '🚗', title: 'VEHICLE IDENTITY',
+      keys: [
+        { key: 'NAME', label: 'Name' },
+        { key: 'ARCHIVE', label: 'Archive' },
+        { key: 'SCENE', label: 'Scene' },
+        { key: 'APOINT', label: 'Archive Point' },
+      ]
+    },
+    {
+      icon: '⚖️', title: 'DYNAMICS',
+      keys: [
+        { key: 'MASS', label: 'Mass (kg)', type: 'number', step: 10 },
+        { key: 'FRICTION', label: 'Friction', type: 'number', step: 0.1 },
+        { key: 'DAMTAKEN', label: 'Damage Taken', type: 'number', step: 0.1 },
+        { key: 'DAMGIVEN', label: 'Damage Given', type: 'number', step: 0.1 },
+        { key: 'VELOCITY-DAMPING', label: 'Velocity Damping', type: 'number', step: 0.01 },
+        { key: 'ANGULAR-DAMPING', label: 'Angular Damping', type: 'number', step: 0.01 },
+        { key: 'MATERIAL', label: 'Material', type: 'number', step: 1 },
+      ]
+    },
+    {
+      icon: '⚙️', title: 'GEARBOX',
+      keys: [
+        { key: 'FINAL-RATIO', label: 'Final Ratio', type: 'number', step: 0.01 },
+        { key: 'REVERSE-RATIO', label: 'Reverse Ratio', type: 'number', step: 0.01 },
+        { key: 'NUM-GEARS', label: 'Num Gears', type: 'number', step: 1 },
+        { key: 'GEARS', label: 'Gear Ratios' },
+        { key: 'CHANGE-DOWN-TIME', label: 'Change Down Time', type: 'number', step: 0.1 },
+        { key: 'CHANGE-UP-TIME', label: 'Change Up Time', type: 'number', step: 0.1 },
+        { key: 'CONTROLLER', label: 'Controller' },
+      ]
+    },
+    {
+      icon: '🛞', title: 'FRONT AXLE',
+      axleIdx: 0,
+      keys: [
+        { key: 'WHEEL-BASE-OFFSET', label: 'Wheel Base Offset', type: 'number', step: 0.01 },
+        { key: 'TRACK-WIDTH', label: 'Track Width', type: 'number', step: 0.01 },
+        { key: 'SPRING-STIFFNESS', label: 'Spring Stiffness', type: 'number', step: 100 },
+        { key: 'DAMPING-RATIO', label: 'Damping Ratio', type: 'number', step: 0.01 },
+        { key: 'REBOUND-DAMPING-RATIO', label: 'Rebound Damping', type: 'number', step: 0.01 },
+        { key: 'RIDE-HEIGHT', label: 'Ride Height', type: 'number', step: 0.001 },
+        { key: 'RADIUS', label: 'Wheel Radius', type: 'number', step: 0.001 },
+        { key: 'CAMBER', label: 'Camber', type: 'number', step: 0.1 },
+        { key: 'TOE', label: 'Toe', type: 'number', step: 0.1 },
+      ]
+    },
+    {
+      icon: '🛞', title: 'REAR AXLE',
+      axleIdx: 1,
+      keys: [
+        { key: 'WHEEL-BASE-OFFSET', label: 'Wheel Base Offset', type: 'number', step: 0.01 },
+        { key: 'TRACK-WIDTH', label: 'Track Width', type: 'number', step: 0.01 },
+        { key: 'SPRING-STIFFNESS', label: 'Spring Stiffness', type: 'number', step: 100 },
+        { key: 'DAMPING-RATIO', label: 'Damping Ratio', type: 'number', step: 0.01 },
+        { key: 'REBOUND-DAMPING-RATIO', label: 'Rebound Damping', type: 'number', step: 0.01 },
+        { key: 'RIDE-HEIGHT', label: 'Ride Height', type: 'number', step: 0.001 },
+        { key: 'RADIUS', label: 'Wheel Radius', type: 'number', step: 0.001 },
+        { key: 'CAMBER', label: 'Camber', type: 'number', step: 0.1 },
+        { key: 'TOE', label: 'Toe', type: 'number', step: 0.1 },
+      ]
+    },
+    {
+      icon: '🛑', title: 'CHASSIS / BRAKING',
+      keys: [
+        { key: 'BRAKING', label: 'Braking Force', type: 'number', step: 0.01 },
+        { key: 'RELATIVESPEED', label: 'Relative Speed', type: 'number', step: 0.01 },
+      ]
+    },
+    {
+      icon: '💡', title: 'HEADLIGHTS',
+      keys: [
+        { key: 'FOV', label: 'FOV', type: 'number', step: 1 },
+        { key: 'NEARZ', label: 'Near Z', type: 'number', step: 0.1 },
+        { key: 'FARZ', label: 'Far Z', type: 'number', step: 1 },
+        { key: 'TILT', label: 'Tilt', type: 'number', step: 0.1 },
+        { key: 'ASPECT', label: 'Aspect', type: 'number', step: 1 },
+        { key: 'FOV-HIBEAM', label: 'FOV Hibeam', type: 'number', step: 1 },
+        { key: 'FARZ-HIBEAM', label: 'Far Z Hibeam', type: 'number', step: 1 },
+        { key: 'TILT-HIBEAM', label: 'Tilt Hibeam', type: 'number', step: 0.1 },
+      ]
+    },
+  ];
+}
+
+function loadVEHUI(filename, bytes) {
+  vehRawBytes = bytes;
+  const { tokens, fields } = parseVEH(bytes);
+  vehTokens = tokens;
+  vehFields = fields;
+
+  document.getElementById('veh-drop').classList.add('hidden');
+  document.getElementById('veh-editor').classList.remove('hidden');
+  document.getElementById('veh-title').textContent = (fields['NAME'] && fields['NAME'][0] ? fields['NAME'][0].value : '') || filename;
+  document.getElementById('veh-type-badge').textContent = (fields['VEHICLE-MOVER-TYPE'] && fields['VEHICLE-MOVER-TYPE'][0]) ? fields['VEHICLE-MOVER-TYPE'][0].value : 'VEH';
+
+  const content = document.getElementById('veh-content');
+  content.innerHTML = '';
+
+  // Build editable sections
+  const sections = VEH_SECTIONS();
+  // For axle-specific sections we need to track occurrence
+  const keyOccurrences = {};
+
+  const getVal = (key, occurrence = 0) => {
+    if (!fields[key] || !fields[key][occurrence]) return '';
+    return fields[key][occurrence].value;
+  };
+
+  sections.forEach((sec, secIdx) => {
+    const card = document.createElement('div');
+    card.className = 'section-card';
+
+    const header = document.createElement('div');
+    header.className = 'section-card-header';
+    header.innerHTML = `<span class="section-card-icon">${sec.icon}</span><span class="section-card-title">${sec.title}</span>`;
+    card.appendChild(header);
+
+    const body = document.createElement('div');
+    body.className = 'section-body';
+    const grid = document.createElement('div');
+    grid.className = 'field-grid';
+
+    sec.keys.forEach(kdef => {
+      const key = kdef.key;
+      const occ = sec.axleIdx !== undefined ? (keyOccurrences[key] || 0) : 0;
+      const rawVal = getVal(key, occ);
+      if (rawVal === '' && sec.axleIdx !== undefined) {
+        // still show it
+      }
+
+      const fg = document.createElement('div');
+      fg.className = 'field-group';
+
+      const lbl = document.createElement('label');
+      lbl.className = 'field-label';
+      lbl.textContent = kdef.label || key;
+
+      const inp = document.createElement('input');
+      inp.type = kdef.type || 'text';
+      if (kdef.step) inp.step = kdef.step;
+      inp.className = 'field-input';
+      inp.value = rawVal;
+      inp.dataset.key = key;
+      inp.dataset.occ = occ;
+
+      inp.addEventListener('change', function() {
+        const k = this.dataset.key;
+        const o = parseInt(this.dataset.occ);
+        if (vehFields[k] && vehFields[k][o] !== undefined) {
+          const tokIdx = vehFields[k][o].tokenIdx;
+          vehTokens[tokIdx] = this.value;
+          vehFields[k][o].value = this.value;
+          this.classList.add('modified');
+        }
+      });
+
+      fg.appendChild(lbl);
+      fg.appendChild(inp);
+      grid.appendChild(fg);
+    });
+
+    // Track axle key occurrences after processing each axle section
+    if (sec.axleIdx !== undefined) {
+      sec.keys.forEach(kdef => {
+        keyOccurrences[kdef.key] = (keyOccurrences[kdef.key] || 0) + 1;
+      });
+    }
+
+    body.appendChild(grid);
+    card.appendChild(body);
+    content.appendChild(card);
+  });
+}
+
+function saveVEH() {
+  if (!vehTokens.length) return;
+  const bytes = buildNullDelimited(vehTokens);
+  downloadBytes(bytes, document.getElementById('veh-title').textContent || 'output.veh');
+  showToast('✓ VEH FILE SAVED');
+}
+
+// ─── FILE IO ──────────────────────────────────────────────────────────────────
+function downloadBytes(bytes, filename) {
+  const blob = new Blob([bytes], { type: 'application/octet-stream' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function handleFileLoad(file, mode) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    const bytes = new Uint8Array(e.target.result);
+    if (mode === 'epd') loadEPDUI(file.name, bytes);
+    else loadVEHUI(file.name, bytes);
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+// File inputs
+document.getElementById('file-input-epd').addEventListener('change', e => {
+  if (e.target.files[0]) handleFileLoad(e.target.files[0], 'epd');
+});
+document.getElementById('file-input-veh').addEventListener('change', e => {
+  if (e.target.files[0]) handleFileLoad(e.target.files[0], 'veh');
+});
+
+// Drag and drop
+['epd-drop','veh-drop'].forEach(id => {
+  const el = document.getElementById(id);
+  const mode = id.startsWith('epd') ? 'epd' : 'veh';
+  el.addEventListener('dragover', e => { e.preventDefault(); el.classList.add('dragover'); });
+  el.addEventListener('dragleave', () => el.classList.remove('dragover'));
+  el.addEventListener('drop', e => {
+    e.preventDefault(); el.classList.remove('dragover');
+    const f = e.dataTransfer.files[0];
+    if (f) handleFileLoad(f, mode);
+  });
+});
+
+// ─── AUTO-LOAD SAMPLES from embedded data ────────────────────────────────────
+// We inject the actual file bytes as base64 so the tool opens ready to use
+// (populated from the uploaded files)
+</script>
+
+<script>
+// Pre-load the sample files if available
+// EPD sample data embedded for demo
+
+const EPD_DEMO = `BasicCar\x001002\x00{\x00Name\x00309\x00CatchupSizeVariation\x001.5\x00CatchupSpeedBack\x000.7\x00CatchupSpeedFront\x000.4\x00PercentChanceToUpgradeWeapon\x0050\x00TOP-SPEED\x006\x00ACCEL\x008\x00GRIP\x007\x00CHARGE\x004\x00VehicleScript\x0016Angels\x00SoundArchive\x00Engine01\x00}\x00BasicCar\x001001\x00{\x00Name\x00324\x00CatchupSizeVariation\x001.5\x00CatchupSpeedBack\x000.7\x00CatchupSpeedFront\x000.4\x00PercentChanceToUpgradeWeapon\x0050\x00TOP-SPEED\x004\x00ACCEL\x004\x00GRIP\x005\x00CHARGE\x005\x00VehicleScript\x0024Seven\x00SoundArchive\x00Engine01\x00}\x00BasicCar\x001011\x00{\x00Name\x00310\x00CatchupSizeVariation\x001.5\x00CatchupSpeedBack\x000.7\x00CatchupSpeedFront\x000.4\x00PercentChanceToUpgradeWeapon\x0050\x00TOP-SPEED\x008\x00ACCEL\x006\x00GRIP\x006\x00CHARGE\x008\x00VehicleScript\x00Boneshaker\x00SoundArchive\x00Engine01\x00}\x00BasicCar\x001003\x00{\x00Name\x00311\x00CatchupSizeVariation\x001.5\x00CatchupSpeedBack\x000.7\x00CatchupSpeedFront\x000.4\x00PercentChanceToUpgradeWeapon\x0050\x00TOP-SPEED\x004\x00ACCEL\x003\x00GRIP\x004\x00CHARGE\x004\x00VehicleScript\x00Brutalistic\x00SoundArchive\x00Engine01\x00}\x00BasicCar\x001004\x00{\x00Name\x00312\x00CatchupSizeVariation\x001.5\x00CatchupSpeedBack\x000.7\x00CatchupSpeedFront\x000.4\x00PercentChanceToUpgradeWeapon\x0050\x00TOP-SPEED\x002\x00ACCEL\x003\x00GRIP\x005\x00CHARGE\x005\x00VehicleScript\x00Bullygoat\x00SoundArchive\x00Engine01\x00}\x00BasicCar\x001012\x00{\x00Name\x00352\x00CatchupSizeVariation\x001.5\x00CatchupSpeedBack\x000.7\x00CatchupSpeedFront\x000.4\x00PercentChanceToUpgradeWeapon\x0050\x00TOP-SPEED\x005\x00ACCEL\x003\x00GRIP\x003\x00CHARGE\x004\x00VehicleScript\x00Chicane\x00SoundArchive\x00Engine01\x00}\x00BasicCar\x001005\x00{\x00Name\x00313\x00CatchupSizeVariation\x001.5\x00CatchupSpeedBack\x000.7\x00CatchupSpeedFront\x000.4\x00PercentChanceToUpgradeWeapon\x0050\x00TOP-SPEED\x004\x00ACCEL\x002\x00GRIP\x004\x00CHARGE\x005\x00VehicleScript\x00CoolOne\x00SoundArchive\x00Engine01\x00}\x00BasicCar\x001013\x00{\x00Name\x00353\x00CatchupSizeVariation\x001.5\x00CatchupSpeedBack\x000.7\x00CatchupSpeedFront\x000.4\x00PercentChanceToUpgradeWeapon\x0050\x00TOP-SPEED\x005\x00ACCEL\x005\x00GRIP\x002\x00CHARGE\x003\x00VehicleScript\x00Covelite\x00SoundArchive\x00Engine01\x00}\x00BasicCar\x001014\x00{\x00Name\x00354\x00CatchupSizeVariation\x001.5\x00CatchupSpeedBack\x000.7\x00CatchupSpeedFront\x000.4\x00PercentChanceToUpgradeWeapon\x0050\x00TOP-SPEED\x008\x00ACCEL\x008\x00GRIP\x008\x00CHARGE\x008\x00VehicleScript\x00DaCar\x00SoundArchive\x00Engine01\x00}\x00BasicCar\x001006\x00{\x00Name\x00315\x00CatchupSizeVariation\x001.5\x00CatchupSpeedBack\x000.7\x00CatchupSpeedFront\x000.4\x00PercentChanceToUpgradeWeapon\x0050\x00TOP-SPEED\x006\x00ACCEL\x004\x00GRIP\x004\x00CHARGE\x006\x00VehicleScript\x00Demon\x00SoundArchive\x00Engine01\x00}\x00BasicCar\x001007\x00{\x00Name\x00316\x00CatchupSizeVariation\x001.5\x00CatchupSpeedBack\x000.7\x00CatchupSpeedFront\x000.4\x00PercentChanceToUpgradeWeapon\x0050\x00TOP-SPEED\x009\x00ACCEL\x008\x00GRIP\x007\x00CHARGE\x0010\x00VehicleScript\x00DieselBoy\x00SoundArchive\x00Engine01\x00}\x00BasicCar\x001008\x00{\x00Name\x00317\x00CatchupSizeVariation\x001.5\x00CatchupSpeedBack\x000.7\x00CatchupSpeedFront\x000.4\x00PercentChanceToUpgradeWeapon\x0050\x00TOP-SPEED\x002\x00ACCEL\x005\x00GRIP\x003\x00CHARGE\x005\x00VehicleScript\x00Formul8r\x00SoundArchive\x00Engine01\x00}\x00BasicCar\x001009\x00{\x00Name\x00318\x00CatchupSizeVariation\x001.5\x00CatchupSpeedBack\x000.7\x00CatchupSpeedFront\x000.4\x00PercentChanceToUpgradeWeapon\x0050\x00TOP-SPEED\x004\x00ACCEL\x004\x00GRIP\x006\x00CHARGE\x003\x00VehicleScript\x00Hellfire\x00SoundArchive\x00Engine01\x00}\x00BasicCar\x001015\x00{\x00Name\x00355\x00CatchupSizeVariation\x001.5\x00CatchupSpeedBack\x000.7\x00CatchupSpeedFront\x000.4\x00PercentChanceToUpgradeWeapon\x0050\x00TOP-SPEED\x009\x00ACCEL\x008\x00GRIP\x009\x00CHARGE\x007\x00VehicleScript\x00HollowBack\x00SoundArchive\x00Engine01\x00}\x00BasicCar\x001016\x00{\x00Name\x00356\x00CatchupSizeVariation\x001.5\x00CatchupSpeedBack\x000.7\x00CatchupSpeedFront\x000.4\x00PercentChanceToUpgradeWeapon\x0050\x00TOP-SPEED\x001\x00ACCEL\x005\x00GRIP\x004\x00CHARGE\x005\x00VehicleScript\x00Jackhammer\x00SoundArchive\x00Engine01\x00}\x00BasicCar\x001017\x00{\x00Name\x00357\x00CatchupSizeVariation\x001.5\x00CatchupSpeedBack\x000.7\x00CatchupSpeedFront\x000.4\x00PercentChanceToUpgradeWeapon\x0050\x00TOP-SPEED\x003\x00ACCEL\x003\x00GRIP\x005\x00CHARGE\x004\x00VehicleScript\x00MidDrift\x00SoundArchive\x00Engine01\x00}\x00BasicCar\x001018\x00{\x00Name\x00358\x00CatchupSizeVariation\x001.5\x00CatchupSpeedBack\x000.7\x00CatchupSpeedFront\x000.4\x00PercentChanceToUpgradeWeapon\x0050\x00TOP-SPEED\x003\x00ACCEL\x005\x00GRIP\x003\x00CHARGE\x004\x00VehicleScript\x00MSTSuzuka\x00SoundArchive\x00Engine01\x00}\x00BasicCar\x001019\x00{\x00Name\x00359\x00CatchupSizeVariation\x001.5\x00CatchupSpeedBack\x000.7\x00CatchupSpeedFront\x000.4\x00PercentChanceToUpgradeWeapon\x0050\x00TOP-SPEED\x006\x00ACCEL\x007\x00GRIP\x007\x00CHARGE\x007\x00VehicleScript\x00MuscleTone\x00SoundArchive\x00Engine01\x00}\x00BasicCar\x001010\x00{\x00Name\x00319\x00CatchupSizeVariation\x001.5\x00CatchupSpeedBack\x000.7\x00CatchupSpeedFront\x000.4\x00PercentChanceToUpgradeWeapon\x0050\x00TOP-SPEED\x007\x00ACCEL\x008\x00GRIP\x008\x00CHARGE\x007\x00VehicleScript\x00NitroDoorslammer\x00SoundArchive\x00Engine01\x00}\x00BasicCar\x001020\x00{\x00Name\x00360\x00CatchupSizeVariation\x001.5\x00CatchupSpeedBack\x000.7\x00CatchupSpeedFront\x000.4\x00PercentChanceToUpgradeWeapon\x0050\x00TOP-SPEED\x002\x00ACCEL\x005\x00GRIP\x004\x00CHARGE\x004\x00VehicleScript\x00OffTrack\x00SoundArchive\x00Engine01\x00}\x00BasicCar\x001021\x00{\x00Name\x00361\x00CatchupSizeVariation\x001.5\x00CatchupSpeedBack\x000.7\x00CatchupSpeedFront\x000.4\x00PercentChanceToUpgradeWeapon\x0050\x00TOP-SPEED\x006\x00ACCEL\x006\x00GRIP\x005\x00CHARGE\x005\x00VehicleScript\x00PhantomRacer\x00SoundArchive\x00Engine01\x00}\x00BasicCar\x001022\x00{\x00Name\x00362\x00CatchupSizeVariation\x001.5\x00CatchupSpeedBack\x000.7\x00CatchupSpeedFront\x000.4\x00PercentChanceToUpgradeWeapon\x0050\x00TOP-SPEED\x009\x00ACCEL\x009\x00GRIP\x0010\x00CHARGE\x0010\x00VehicleScript\x00PowerBomb\x00SoundArchive\x00Engine01\x00}\x00BasicCar\x001023\x00{\x00Name\x00363\x00CatchupSizeVariation\x001.5\x00CatchupSpeedBack\x000.7\x00CatchupSpeedFront\x000.4\x00PercentChanceToUpgradeWeapon\x0050\x00TOP-SPEED\x004\x00ACCEL\x003\x00GRIP\x003\x00CHARGE\x005\x00VehicleScript\x00Rockster\x00SoundArchive\x00Engine01\x00}\x00BasicCar\x001024\x00{\x00Name\x00364\x00CatchupSizeVariation\x001.5\x00CatchupSpeedBack\x000.7\x00CatchupSpeedFront\x000.4\x00PercentChanceToUpgradeWeapon\x0050\x00TOP-SPEED\x0010\x00ACCEL\x0010\x00GRIP\x0010\x00CHARGE\x0010\x00VehicleScript\x00ShadowMk2\x00SoundArchive\x00Engine01\x00}\x00BasicCar\x001025\x00{\x00Name\x00365\x00CatchupSizeVariation\x001.5\x00CatchupSpeedBack\x000.7\x00CatchupSpeedFront\x000.4\x00PercentChanceToUpgradeWeapon\x0050\x00TOP-SPEED\x008\x00ACCEL\x009\x00GRIP\x006\x00CHARGE\x006\x00VehicleScript\x00SK2BattleSpec\x00SoundArchive\x00Engine01\x00}\x00BasicCar\x001026\x00{\x00Name\x00366\x00CatchupSizeVariation\x001.5\x00CatchupSpeedBack\x000.7\x00CatchupSpeedFront\x000.4\x00PercentChanceToUpgradeWeapon\x0050\x00TOP-SPEED\x005\x00ACCEL\x005\x00GRIP\x001\x00CHARGE\x004\x00VehicleScript\x00SoooFast\x00SoundArchive\x00Engine01\x00}\x00BasicCar\x001027\x00{\x00Name\x00367\x00CatchupSizeVariation\x001.5\x00CatchupSpeedBack\x000.7\x00CatchupSpeedFront\x000.4\x00PercentChanceToUpgradeWeapon\x0050\x00TOP-SPEED\x003\x00ACCEL\x005\x00GRIP\x005\x00CHARGE\x002\x00VehicleScript\x00Spectyte\x00SoundArchive\x00Engine01\x00}\x00BasicCar\x001028\x00{\x00Name\x00368\x00CatchupSizeVariation\x001.5\x00CatchupSpeedBack\x000.7\x00CatchupSpeedFront\x000.4\x00PercentChanceToUpgradeWeapon\x0050\x00TOP-SPEED\x0010\x00ACCEL\x0010\x00GRIP\x0010\x00CHARGE\x0010\x00VehicleScript\x00SpeedBump\x00SoundArchive\x00Engine01\x00}\x00BasicCar\x001029\x00{\x00Name\x00369\x00CatchupSizeVariation\x001.5\x00CatchupSpeedBack\x000.7\x00CatchupSpeedFront\x000.4\x00PercentChanceToUpgradeWeapon\x0050\x00TOP-SPEED\x009\x00ACCEL\x009\x00GRIP\x0010\x00CHARGE\x008\x00VehicleScript\x00Spinebuster\x00SoundArchive\x00Engine01\x00}\x00BasicCar\x001030\x00{\x00Name\x00370\x00CatchupSizeVariation\x001.5\x00CatchupSpeedBack\x000.7\x00CatchupSpeedFront\x000.4\x00PercentChanceToUpgradeWeapon\x0050\x00TOP-SPEED\x006\x00ACCEL\x006\x00GRIP\x007\x00CHARGE\x007\x00VehicleScript\x00SuperTsunami\x00SoundArchive\x00Engine01\x00}\x00`;
+
+// Auto-load the EPD demo data
+const epdBytes = new TextEncoder().encode(EPD_DEMO);
+loadEPDUI('ELIMINATORGM.EPD', epdBytes);
+</script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+
+    objType eventObj_points_race 
+        { 
+            text 458 
+            event 5002 
+            count 500 
+        } 
+        
+    objType eventObj_WepStrike 
+        { 
+            text 476 
+            event 5002 
+        } 
+    
+    objType eventObj_WheelTouchDown 
+        { 
+            text 460 
+            event 5010 
+            count 2 
+        }
+
+    objType eventObj_TriggerShortCut 
+        { 
+            text 464 
+            textaddon 662 
+            event 5010 
+            shortcut 17 16 
+        } 
+    
+    objType eventObj_time_Draft 
+        { 
+            text 466 
+            event 5006 
+            count 2 
+        } 
+    
+    objType eventObj_WepStrike 
+        { 
+            text 615 
+            event 5006 
+            timeLimit 40 
+        } 
+    
+    objType eventObj_points_Drift 
+        { 
+            text 462 
+            event 5003 
+            count 500 
+        } 
+    
+    objType eventObj_TriggerShortCut 
+        { 
+            text 464 
+            textaddon 663 
+            event 5003 
+            shortcut 22 15 
+        } 
+    
+    objType eventObj_WepStrike 
+        { 
+            text 463 
+            textaddon 645 
+            event 5011 
+            weptype 4005 
+        } 
+    
+    objType eventObj_count_ChargeWep 
+        { 
+            text 478 
+            event 5011 
+            count 1 
+        } 
+    
+    objType eventObj_finish 
+        { 
+            text 551 
+            textaddon 367 
+            event 5007 
+            PositionSpecific 1 
+            CarSpecific 1527 
+        } 
+    
+    objType eventObj_points_race 
+        { 
+            text 458 
+            event 5007 
+            count 750 
+        } 
+    
+    objType eventObj_WepStrike 
+        { 
+            text 552 
+            textaddon 655 
+            textaddon2 664 
+            activate 
+            event 5004 
+            weptype 4009 
+            area 0 
+        } 
+    
+    objType eventObj_count_PickUps 
+        { 
+            text 481 
+            event 5004 
+            Blue count 1 
+        } 
+    
+    objType eventObj_time_HoldFirstPos 
+        { 
+            text 461 
+            event 5012 
+            count 20 
+        } 
+    
+    objType eventObj_points_race 
+        { 
+            text 458 
+            event 5012 
+            count 1000 
+        } 
+    
+    objType eventObj_time_Draft 
+        { 
+            text 466 
+            event 5008 
+            count 3 
+        } 
+    
+    objType eventObj_WepStrike 
+        { 
+            text 615 
+            event 5008 
+            timeLimit 35 
+        } 
+    
+    objType eventObj_trackSmashables 
+        { 
+            trackSmashCount 18 7 
+            text 603 
+            event 5005 
+            objectId 
+            dominoDb 
+            dominoDc 
+            dominoEa 
+            dominoEa01 
+            dominoEa02 
+            dominoEa03 
+            dominoEa04 
+            dominoEa05 
+            dominoEa06 
+            dominoEa07 
+            dominoEa08 
+            dominoEa09 
+            dominoEa10 
+            dominoEb 
+            dominoEc 
+            dominoFa 
+            dominoFb 
+            dominoFc 
+        } 
+    
+    objType eventObj_points_race 
+        { 
+            text 458 
+            event 5005 
+            count 1500 
+        } 
+    
+    objType eventObj_finish 
+        { 
+            text 564 
+            event 5013 
+            withWep 
+        } 
+    
+    objType eventObj_WepStrike 
+        { 
+            text 483 
+            textaddon 645 
+            textaddon2 665 
+            event 5013 
+            weptype 4005 
+            area 0 
+        } 
+    
+    objType eventObj_points_Drift 
+        { 
+            text 462 
+            event 5009 
+            count 750 
+        } 
+    
+    objType eventObj_WheelTouchDown 
+        { 
+            text 460 
+            event 5009 
+            count 4 
+        } 
+    
+    objType eventObj_points_race 
+        { 
+            text 458 
+            event 5014 
+            count 15000 
+        } 
+    
+    objType eventObj_WepStrike 
+        { 
+            text 463 
+            textaddon 666 
+            event 5014 
+            weptype 4010 
+            superCharged 
+        } 

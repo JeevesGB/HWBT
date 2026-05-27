@@ -77,6 +77,12 @@ HWBT/
 
 ---
 
+## Credits
+
+- Beastincolt
+
+---
+
 ## ⚠️ Legal Notice
 
 This project is for **educational and research purposes only**. No copyrighted game assets are included in this repository. You must own a legitimate copy of *Hot Wheels: Beat That!* to make use of any tooling or documentation here.

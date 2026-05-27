@@ -66,6 +66,14 @@ HWBT/
 1. Open VSCode
 2. Press `Ctrl+Shift+P` → **Extensions: Install from VSIX...**
 3. Select `VSCode-Extensions/hwbt-syntax-1.1.0.vsix`
+4. Press `Ctrl+Shift+P` Hot Wheels Beat That: Open HWBT Data File
+
+**Currently supported filetypes**
+- .AMM
+- .CMS
+- .VEH
+- .EPD
+- .GCF
 
 ---
 

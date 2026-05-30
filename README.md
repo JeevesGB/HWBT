@@ -75,6 +75,8 @@ HWBT/
 - .EPD
 - .GCF
 
+***Please note this is read only for now.***
+
 ---
 
 ## Credits

@@ -1,0 +1,170 @@
+PHYSICS_PARAMETERS 
+    { 
+        CALLBACKS 
+            { 
+                ALTER-MOVER-MOVER-CONTACTS TRUE ALTER-MOVER-LAND-CONTACTS TRUE COLLISION-ERRORS 
+                    { 
+                        MOVER-MOVER 
+                            { 
+                                FOR-HUMANS TRUE 
+                                FOR-NON-HUMANS TRUE 
+                                ONLY-IF-UPRIGHT FALSE 
+                                SPEED-THRESHOLD 20.0 
+                                NORMAL-DOT-PRODUCT-THRESHOLD 0.98 
+                                PENETRATION-THRESHOLD 9.2 
+                            } 
+                    
+                        MOVER-LAND 
+                            { 
+                                FOR-HUMANS TRUE 
+                                FOR-NON-HUMANS FALSE 
+                                ONLY-IF-UPRIGHT FALSE 
+                                NUM-LINES 4 
+                                ALLOW-DEEPER-PENETERATION TRUE 
+                                PENETRATION-DIFFERENCE-THRESHOLD 0.03 
+                                MAX-SIMULTANEOUS-MOVERS-ALL 7 
+                                MAX-SIMULTANEOUS-MOVERS-HUMAN 2 
+                                MAX-SIMULTANEOUS-KDTREES 2 
+                                MAX-SIMULTANEOUS-KDLEAVES 16 
+                            } 
+                        
+                        MOVER-KINEMATIC 
+                            { 
+                                FOR-HUMANS TRUE 
+                                FOR-NON-HUMANS TRUE 
+                                ONLY-IF-UPRIGHT FALSE 
+                            } 
+                    } 
+                
+                HIGH-PENETRATIONS 
+                    { 
+                        FOR-HUMANS TRUE 
+                        FOR-NON-HUMANS TRUE 
+                        ONLY-IF-UPRIGHT FALSE 
+                        PENETRATION-PROPORTION 5.0 
+                        SPEED-THRESHOLD 1.5 
+                    } 
+                
+                DOWNWARDS-NORMALS 
+                    { 
+                        FOR-HUMANS FALSE 
+                        FOR-NON-HUMANS FALSE 
+                        ONLY-IF-UPRIGHT FALSE 
+                        Y-NORMAL-THRESHOLD -0.99 
+                        RECTIFY-INSTEAD-OF-DELETE FALSE 
+                    } 
+                    
+                ROGUE-CONTACTS 
+                    { 
+                        FOR-HUMANS FALSE 
+                        FOR-NON-HUMANS TRUE 
+                        ONLY-IF-UPRIGHT FALSE 
+                        SPEED-THRESHOLD 1.0 
+                    } 
+                    
+                GROUNDING 
+                    { 
+                        FOR-HUMANS FALSE 
+                        FOR-NON-HUMANS FALSE 
+                        ONLY-IF-UPRIGHT TRUE 
+                        Y-NORMAL-THRESHOLD 0.5 
+                    } 
+                
+                PREVENT-PIGGYBACK 
+                    { 
+                        FOR-HUMANS FALSE 
+                        FOR-NON-HUMANS FALSE 
+                        ONLY-IF-UPRIGHT FALSE 
+                        Y-THRESHOLD 0.4 
+                    } 
+                    
+                WALL-STICKING 
+                    { 
+                        FOR-HUMANS TRUE 
+                        FOR-NON-HUMANS TRUE 
+                        ONLY-IF-UPRIGHT FALSE 
+                    } 
+            } 
+        
+        EVENTS 
+            { 
+                CONTACT-TOLERANCE 9.9 
+                AVERAGE-LAND-CONTACTS TRUE 
+            } 
+        
+        CHASSIS-FALLBACK 
+            { 
+                SPEED-THRESHOLD 99.9 
+                GRACE-PERIOD 0.1 
+                MAX-ITERATIONS 3 
+                ALWAYS-ON-FOR-HUMANS TRUE 
+                ALWAYS-ON-FOR-NON-HUMANS TRUE 
+            } 
+            
+        AGEIA 
+            { 
+                MAX-OPCODE-NODES 32 
+                MAX-OBJECTS 512 
+                MAX-SIPS-PER-POOL 128 
+                MAX-KD-CELLS 64 
+                DEFAULT-GRAVITY 0.0 0.0 0.0 
+                MIN-SEPARATION -0.01 
+                BOX-SCALE 1.0 0.75 1.0 
+            } 
+        
+        MATERIALS 
+            { 
+                DEFAULT 
+                    { 
+                        RESTITUTION 8.2 
+                        DYNAMIC-FRICTION 9.1 
+                        STATIC-FRICTION 9.2 
+                    } 
+                    
+                LAND 
+                    { 
+                        RESTITUTION 8.2 
+                        DYNAMIC-FRICTION 0.0 
+                        STATIC-FRICTION 0.0 
+                    } 
+                
+                MOVER 
+                    { 
+                        RESTITUTION 8.5 
+                        DYNAMIC-FRICTION 9.5 
+                        STATIC-FRICTION 9.5 
+                    } 
+                    
+                KD-TREE-SPECIAL 
+                    { 
+                        17 
+                    } 
+            } 
+            
+        COLLISION-RESPONSE-MODS 
+            { 
+                RACE 
+                    { 
+                        ENABLED TRUE 
+                        TORQUE-BIAS 9.0 
+                        IMPULSE-BIAS 1.0
+                        TORQUE-SCALE 9.8 9.8 9.8 
+                        IMPULSE-SCALE 1.0 
+                    } 
+                
+                PLAYER 
+                    { 
+                        ENABLED TRUE 
+                        TORQUE-BIAS 9.0 
+                        IMPULSE-BIAS 1.0 
+                        TORQUE-SCALE 9.8 9.8 9.8 
+                        IMPULSE-SCALE 1.0 
+                    } 
+                    
+                DISABLE-IN-JAMS FALSE 
+                JAM-DOT-PRODUCT-THRESHOLD 0.95 
+                MIN-FRAMES-JAMS-LAST 10 
+            } 
+        
+        WHEELS-IGNORE-WALLS TRUE 
+    } 

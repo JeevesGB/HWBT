@@ -1,0 +1,283 @@
+struct VS_INPUT
+{
+	float4 Pos 		: POSITION;
+	float4 Diffuse 	: COLOR0;
+	float3 Normal 	: NORMAL;
+	float3 Tangent 	: TEXCOORD0;
+};
+
+struct VS_OUTPUT
+{
+	float4 Pos 		 	: POSITION;
+	float4 Diffuse 		: COLOR0;
+	float3 LookupDir 	: TEXCOORD0;
+	float3 LookupDir1	: TEXCOORD1;
+	float3 LookupDir2	: TEXCOORD2;
+	float3 LookupDir3	: TEXCOORD3;
+	float3 LookupDir4	: TEXCOORD4;
+	float3 LookupDir5	: TEXCOORD5;
+	float3 LookupDir6	: TEXCOORD6;
+};
+
+int sys_NumBlurPasses = 3;
+
+float4x4 g_WorldViewProjection : WORLDVIEWPROJECTION;
+float g_SourceLevel;	// miplevel to sample from
+float g_DestDims;		// size of current face
+float g_SeamFixup;		// seam fixup, push it in by n * Normal
+int g_SourcePO2;		// source size (^2)
+
+samplerCUBE g_Tex0 : register(s0) = sampler_state
+{
+	MinFilter = Linear;
+	MagFilter = Linear;
+	MipFilter = Point;
+	AddressU = Wrap;
+	AddressV = Wrap;
+	AddressW = Wrap;
+};
+
+float4x4 MatrixRotX(float ang)
+{
+	float c; float s;
+	sincos(ang, s, c);
+	
+	float4x4 m;
+	m[0][0] = 1; m[0][1] = 0; m[0][2] =  0; m[0][3] = 0;
+	m[1][0] = 0; m[1][1] = c; m[1][2] = -s; m[1][3] = 0; 
+	m[2][0] = 0; m[2][1] = s; m[2][2] =  c; m[2][3] = 0;
+	m[3][0] = 0; m[3][1] = 0; m[3][2] =  0; m[3][3] = 1;
+	
+	return m;
+}
+
+float4x4 MatrixRotY(float ang)
+{
+	float c; float s;
+	sincos(ang, s, c);
+	
+	float4x4 m;
+	m[0][0] = c; m[0][1] = 0; m[0][2] = -s; m[0][3] = 0;
+	m[1][0] = 0; m[1][1] = 1; m[1][2] =  0; m[1][3] = 0; 
+	m[2][0] = s; m[2][1] = 0; m[2][2] =  c; m[2][3] = 0;
+	m[3][0] = 0; m[3][1] = 0; m[3][2] =  0; m[3][3] = 1;
+	
+	return m;
+}
+
+float4x4 MatrixRotZ(float ang)
+{
+	float c; float s;
+	sincos(ang, s, c);
+	
+	float4x4 m;
+	m[0][0] = c; m[0][1] =-s; m[0][2] =  0; m[0][3] = 0;
+	m[1][0] = s; m[1][1] = c; m[1][2] =  0; m[1][3] = 0; 
+	m[2][0] = 0; m[2][1] = 0; m[2][2] =  1; m[2][3] = 0;
+	m[3][0] = 0; m[3][1] = 0; m[3][2] =  0; m[3][3] = 1;
+	
+	return m;
+}
+
+// nvidia magic numbers
+const static float blurMults[] = { 11.5, 23, 34.5 };
+
+// my magic numbers (diffuse)
+//const static float blurMults[] = { 8, 16, 32 };
+
+
+//const static float blurMults[] = { 22, 33, 55 };
+//const static float blurMults[] = { 4, 8, 12 };
+//const static float blurMults[] = { 2, 4, 6 };
+float SeamScale = 0.25f;
+
+float blurVals[] = { 0.0f, // 1
+					 0.0f, // 2
+					 0.0f, // 4
+					 -0.10f, // 8
+					 -0.06f, // 16
+					 -0.020f, // 32
+					 -0.016f,   // 64
+					 -0.004f, // 128
+					 0.0f, // 256
+					 0.0f, // 512
+					 0.0f  // 1024 
+					};
+					
+
+VS_OUTPUT vs_y(VS_INPUT In)
+{
+	VS_OUTPUT Out = (VS_OUTPUT)0;
+	float4 pos = In.Pos;
+	pos.z *= -1;
+	
+	float tmp_SeamFixup = blurVals[g_SourcePO2];
+	
+	Out.Pos = mul(pos, g_WorldViewProjection);
+	//Out.LookupDir = lerp(normalize(In.Pos), In.Normal, g_SeamFixup * SeamScale);
+	Out.LookupDir = lerp(normalize(In.Pos), In.Normal, tmp_SeamFixup);
+
+	Out.LookupDir1 = mul(Out.LookupDir, MatrixRotY(0.01745  * blurMults[0])).xyz;
+	Out.LookupDir2 = mul(Out.LookupDir, MatrixRotY(-0.01745 * blurMults[0])).xyz;
+	Out.LookupDir3 = mul(Out.LookupDir, MatrixRotY(0.01745  * blurMults[1])).xyz;
+	Out.LookupDir4 = mul(Out.LookupDir, MatrixRotY(-0.01745 * blurMults[1])).xyz;
+	Out.LookupDir5 = mul(Out.LookupDir, MatrixRotY(0.01745  * blurMults[2])).xyz;
+	Out.LookupDir6 = mul(Out.LookupDir, MatrixRotY(-0.01745 * blurMults[2])).xyz;
+
+	Out.Diffuse = In.Diffuse;
+	
+	return Out;
+}
+
+VS_OUTPUT vs_x(VS_INPUT In)
+{
+	VS_OUTPUT Out = (VS_OUTPUT)0;
+	float4 pos = In.Pos;
+	pos.z *= -1;
+	
+	float tmp_SeamFixup = blurVals[g_SourcePO2];
+	
+	Out.Pos = mul(pos, g_WorldViewProjection);
+	//Out.LookupDir = lerp(normalize(In.Pos), In.Normal, g_SeamFixup * SeamScale);
+	Out.LookupDir = lerp(normalize(In.Pos), In.Normal, tmp_SeamFixup);
+
+	Out.LookupDir1 = mul(Out.LookupDir, MatrixRotX(0.01745  * blurMults[0])).xyz;
+	Out.LookupDir2 = mul(Out.LookupDir, MatrixRotX(-0.01745 * blurMults[0])).xyz;
+	Out.LookupDir3 = mul(Out.LookupDir, MatrixRotX(0.01745  * blurMults[1])).xyz;
+	Out.LookupDir4 = mul(Out.LookupDir, MatrixRotX(-0.01745 * blurMults[1])).xyz;
+	Out.LookupDir5 = mul(Out.LookupDir, MatrixRotX(0.01745  * blurMults[2])).xyz;
+	Out.LookupDir6 = mul(Out.LookupDir, MatrixRotX(-0.01745 * blurMults[2])).xyz;
+
+	Out.Diffuse = In.Diffuse;
+	
+	return Out;
+}
+
+VS_OUTPUT vs_z(VS_INPUT In)
+{
+	VS_OUTPUT Out = (VS_OUTPUT)0;
+	float4 pos = In.Pos;
+	pos.z *= -1;
+	
+	float tmp_SeamFixup = blurVals[g_SourcePO2];
+	
+	Out.Pos = mul(pos, g_WorldViewProjection);
+	//Out.LookupDir = lerp(normalize(In.Pos), In.Normal, g_SeamFixup * SeamScale);
+	Out.LookupDir = lerp(normalize(In.Pos), In.Normal, tmp_SeamFixup);
+
+	Out.LookupDir1 = mul(Out.LookupDir, MatrixRotZ(0.01745  * blurMults[0])).xyz;
+	Out.LookupDir2 = mul(Out.LookupDir, MatrixRotZ(-0.01745 * blurMults[0])).xyz;
+	Out.LookupDir3 = mul(Out.LookupDir, MatrixRotZ(0.01745  * blurMults[1])).xyz;
+	Out.LookupDir4 = mul(Out.LookupDir, MatrixRotZ(-0.01745 * blurMults[1])).xyz;
+	Out.LookupDir5 = mul(Out.LookupDir, MatrixRotZ(0.01745  * blurMults[2])).xyz;
+	Out.LookupDir6 = mul(Out.LookupDir, MatrixRotZ(-0.01745 * blurMults[2])).xyz;
+
+	Out.Diffuse = In.Diffuse;
+	
+	return Out;
+}
+
+//float weights[] = { 1.0f, 0.75f, 0.65f, 0.55f, 0.45f, 0.35f };
+float weights[] = { 1.0f, 0.65f, 0.45f, 0.35f, 0.25f, 0.15f };
+//float weights[] = { 1, 1, 1, 1, 1, 1, 1 };
+
+float4 ps(VS_OUTPUT In) : COLOR
+{
+	float4 Sample = { 0, 0, 0, 0 };
+
+	float3 l = normalize(In.LookupDir);
+	float3 l1 = normalize(In.LookupDir1);
+	float3 l2 = normalize(In.LookupDir2);
+	float3 l3 = normalize(In.LookupDir3);
+	float3 l4 = normalize(In.LookupDir4);
+	float3 l5 = normalize(In.LookupDir5);
+	float3 l6 = normalize(In.LookupDir6);
+	
+	float sourceLevel = g_SourceLevel;
+	
+	Sample.rgba += float4(texCUBElod(g_Tex0, float4(l,  g_SourceLevel)).rgb, 1.0f) * weights[0];
+	Sample.rgba += float4(texCUBElod(g_Tex0, float4(l1, g_SourceLevel)).rgb, 1.0f) * weights[1];
+	Sample.rgba += float4(texCUBElod(g_Tex0, float4(l2, g_SourceLevel)).rgb, 1.0f) * weights[1];
+	Sample.rgba += float4(texCUBElod(g_Tex0, float4(l3, g_SourceLevel)).rgb, 1.0f) * weights[3];
+	Sample.rgba += float4(texCUBElod(g_Tex0, float4(l4, g_SourceLevel)).rgb, 1.0f) * weights[3];
+	Sample.rgba += float4(texCUBElod(g_Tex0, float4(l5, g_SourceLevel)).rgb, 1.0f) * weights[5];
+	Sample.rgba += float4(texCUBElod(g_Tex0, float4(l6, g_SourceLevel)).rgb, 1.0f) * weights[5];
+	
+	Sample.rgba += float4(texCUBElod(g_Tex0, float4(l1 + l3, g_SourceLevel)).rgb, 1.0f) * weights[2];
+	Sample.rgba += float4(texCUBElod(g_Tex0, float4(l3 + l5, g_SourceLevel)).rgb, 1.0f) * weights[2];
+	Sample.rgba += float4(texCUBElod(g_Tex0, float4(l2 + l4, g_SourceLevel)).rgb, 1.0f) * weights[4];
+	Sample.rgba += float4(texCUBElod(g_Tex0, float4(l4 + l6, g_SourceLevel)).rgb, 1.0f) * weights[4];
+
+
+	Sample.rgba += float4(texCUBElod(g_Tex0, float4(l1 * 0.25 + l3 * 0.75, g_SourceLevel)).rgb, 1.0f) * weights[2];
+	Sample.rgba += float4(texCUBElod(g_Tex0, float4(l3 * 0.25 + l5 * 0.75, g_SourceLevel)).rgb, 1.0f) * weights[2];
+	Sample.rgba += float4(texCUBElod(g_Tex0, float4(l2 * 0.25 + l4 * 0.75, g_SourceLevel)).rgb, 1.0f) * weights[4];
+	Sample.rgba += float4(texCUBElod(g_Tex0, float4(l4 * 0.25 + l6 * 0.75, g_SourceLevel)).rgb, 1.0f) * weights[4];
+
+	Sample.rgba += float4(texCUBElod(g_Tex0, float4(l1 * 0.75 + l3 * 0.25, g_SourceLevel)).rgb, 1.0f) * weights[2];
+	Sample.rgba += float4(texCUBElod(g_Tex0, float4(l3 * 0.75 + l5 * 0.25, g_SourceLevel)).rgb, 1.0f) * weights[2];
+	Sample.rgba += float4(texCUBElod(g_Tex0, float4(l2 * 0.75 + l4 * 0.25, g_SourceLevel)).rgb, 1.0f) * weights[4];
+	Sample.rgba += float4(texCUBElod(g_Tex0, float4(l4 * 0.75 + l6 * 0.25, g_SourceLevel)).rgb, 1.0f) * weights[4];
+
+
+/*
+	Sample.rgb += texCUBElod(g_Tex0, float4(l1 * 0.25f + l3 + 0.75f, g_SourceLevel));
+	Sample.rgb += texCUBElod(g_Tex0, float4(l3 * 0.25f + l5 + 0.75f, g_SourceLevel));
+	Sample.rgb += texCUBElod(g_Tex0, float4(l2 * 0.25f + l4 + 0.75f, g_SourceLevel));
+	Sample.rgb += texCUBElod(g_Tex0, float4(l4 * 0.25f + l6 + 0.75f, g_SourceLevel));
+
+	Sample.rgb += texCUBElod(g_Tex0, float4(l1 * 0.75f + l3 + 0.25f, g_SourceLevel));
+	Sample.rgb += texCUBElod(g_Tex0, float4(l3 * 0.75f + l5 + 0.25f, g_SourceLevel));
+	Sample.rgb += texCUBElod(g_Tex0, float4(l2 * 0.75f + l4 + 0.25f, g_SourceLevel));
+	Sample.rgb += texCUBElod(g_Tex0, float4(l4 * 0.75f + l6 + 0.25f, g_SourceLevel));
+*/
+
+	Sample.rgb /= Sample.a;
+	Sample.a = 1.0f;
+
+
+ 	return Sample;
+}
+
+technique CubeMapBlur
+{
+	pass p0
+	{
+		CullMode = None;
+		AlphaTestEnable = False;
+		AlphaBlendEnable = False;
+		ZWriteEnable = False;
+		ZEnable = True;
+	
+		VertexShader = compile vs_3_0 vs_x();
+		PixelShader = compile ps_3_0 ps();
+	}
+	pass p1
+	{
+		CullMode = None;
+		AlphaTestEnable = False;
+		AlphaBlendEnable = False;
+		SrcBlend = One;
+		DestBlend = One;
+		ZWriteEnable = False;
+		ZEnable = True;
+	
+		VertexShader = compile vs_3_0 vs_y();
+		PixelShader = compile ps_3_0 ps();
+	}
+	pass p2
+	{
+		CullMode = None;
+		AlphaTestEnable = False;
+		AlphaBlendEnable = False;
+		SrcBlend = One;
+		DestBlend = One;
+		ZWriteEnable = False;
+		ZEnable = True;
+	
+		VertexShader = compile vs_3_0 vs_z();
+		PixelShader = compile ps_3_0 ps();
+	}
+}
+
+
